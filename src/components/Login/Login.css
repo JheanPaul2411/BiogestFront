@@ -1,0 +1,37 @@
+#container_login{
+    @apply grid grid-cols-1 w-full h-screen sm:grid-cols-2
+}
+
+section#image-side {
+    background-image: url(../../assets/imagenlogin.jpg);
+    background-size: cover;
+    position: relative;
+    @apply w-auto min-h-[200px] h-auto flex flex-col items-center justify-center
+}
+
+section#image-side::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(5px); 
+    z-index: -1;
+}
+
+
+section#image-side{
+    background-image: url(../../assets/imagenlogin.jpg);
+    background-size: cover;
+    backdrop-filter: blur(10px);
+}
+
+#form_login{
+    @apply w-auto h-full flex flex-col items-center justify-center p-10 gap-5
+}
+
+form > *{
+    @apply w-full
+}
