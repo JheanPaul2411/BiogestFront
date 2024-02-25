@@ -7,6 +7,7 @@ import {
     DropdownDivider,
     DropdownHeader,
     DropdownItem,
+    DarkThemeToggle,
     Flowbite,
     Navbar,
     NavbarBrand,
@@ -23,7 +24,7 @@ function NavBar() {
     const { pathname } = useLocation();
     const token = sessionStorage.getItem('token');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const { user, setUser } = useContext(UserContext); // Aquí obtenemos el objeto de contexto
+    const { user, setUser } = useContext(UserContext);
 
 
 
@@ -49,13 +50,14 @@ function NavBar() {
     }, [token, isLoggedIn, setUser]);
 
     return (
-        <Flowbite>
+        <Flowbite >
 
             <Navbar fluid rounded>
                 <NavbarBrand>
                     <img src={Logo} className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
                 </NavbarBrand>
                 <div className="flex md:order-2">
+                    <DarkThemeToggle hidden />
 
                     {isLoggedIn ? (
                         <>
@@ -65,13 +67,13 @@ function NavBar() {
                                 label={
                                     <Avatar rounded />
                                 }
+                                className="z-[500]"
                             >
 
                                 <DropdownHeader>
-                                    <span className="block text-sm">{user?.data.nombre}</span>
-                                    <span className="block truncate text-sm font-medium">{user?.data.email}</span>
+                                    <span className="block text-sm">{user?.nombre}</span>
+                                    <span className="block truncate text-sm font-medium">{user?.email}</span>
                                 </DropdownHeader>
-                                <DropdownItem></DropdownItem>
                                 <DropdownItem>Mi perfil</DropdownItem>
 
 

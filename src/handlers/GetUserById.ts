@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import {  jwtDecode } from "jwt-decode";
 import { CustomJwtPayload } from "../components/models/Payload";
 import { Usuario } from "../components/models/UserDto";
@@ -12,14 +12,13 @@ export async function getUserByToken(token:string):Promise<Usuario> {
 
     try {
     
-        const user:Usuario = await axios.get(apiUrl,{
+        const user:AxiosResponse<Usuario> = await axios.get(apiUrl,{
             headers: {
                 'authorization': `bearer ${token}`
             }
         });
-        console.log(user.data.nombre)
 
-        return user;
+        return user.data;
         
     } catch (error) {
         console.log('Token',token)
