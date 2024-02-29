@@ -1,6 +1,6 @@
 import axios from "axios";
-import { ApiResponse } from "../Pages/dto/Login.dto";
 import validateToken from "./ValidateToken";
+import { ApiResponse } from "../components/AgendarCita/dto/Login.dto";
 
 interface LoginCredentials {
     email: string;
@@ -21,15 +21,13 @@ export async function loginUser(credentials: LoginCredentials): Promise<ApiRespo
         const tokenVerified = await validateToken(token); // Await the result of validateToken
         if (tokenVerified) {
             sessionStorage.setItem('token', token);
-            console.log('Token válido');
         } else {
             console.log('Token inválido');
         }
         
-        console.warn(typeof(token));
         return response.data;
     } catch (error) {
-        console.warn(error);
+        console.log(error);
         throw error;
     }
 }

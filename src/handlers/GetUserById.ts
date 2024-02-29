@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import {  jwtDecode } from "jwt-decode";
-import { CustomJwtPayload } from "../components/models/Payload";
-import { Usuario } from "../components/models/UserDto";
+import { CustomJwtPayload } from "../models/Payload";
+import { Usuario } from "../models/User";
 import { baseUrl } from "../constants/BaseURL";
 
 export async function getUserByToken(token:string):Promise<Usuario> {

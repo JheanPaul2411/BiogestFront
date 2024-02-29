@@ -4,6 +4,9 @@
 
 
 html, body,#root{
-    min-height: 100%;
-    @apply bg-gray-800
+    @apply min-h-fit h-full m-0 p-0
+}
+
+span,p,h1,h2,h3,h4{
+    @apply dark:text-white
 }

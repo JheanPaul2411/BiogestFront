@@ -14,20 +14,24 @@ const CitaForm: React.FC = () => {
 
 
   const handleSendCita = () => {
-    if (fecha) {
-      const response = agendarCita({
-        fecha: new Date(fecha),
-        pacienteId: user?.data.id,
-        motivo,
-        sintomas,
-      });
-      console.warn(response)
-    }
+    const response = agendarCita({
+      fecha: new Date(fecha),
+      pacienteId: user?.id,
+      motivo,
+      sintomas,
+    });
+
+    setMotivo('');
+    setSintomas('');
+    setFecha('');
+    console.log(response)
+    alert("Has solicitado la cita correctamente");
+
 
   };
 
   return (
-    <form className='bg-gray-700 p-10 rounded-md grid items-center justify-center gap-5 sm:grid-cols-2 sm:items-start'>
+    <form className='dark:bg-gray-700 bg-gray-50 p-10 rounded-md grid items-center justify-center gap-5 sm:grid-cols-2 sm:items-start'>
       <div className="row2 grid container_inputs">
 
         <div className='flex flex-col'>
@@ -38,14 +42,14 @@ const CitaForm: React.FC = () => {
 
         <div className='flex flex-col'>
           <Label className='font-normal'>Síntomas</Label>
-          <Textarea id="sintomas" cols={30} rows={6} onChange={e => setSintomas(e.target.value)} placeholder='En caso de que presente algunos síntomas, especifique.'></Textarea>
+          <Textarea id="sintomas" cols={30} rows={6} onChange={e => setSintomas(e.target.value)} value={sintomas} placeholder='En caso de que presente algunos síntomas, especifique.'></Textarea>
         </div>
       </div>
 
       <div className="container_inputs row1 flex flex-col items-start gap-5">
         <div className="">
           <Label className='font-normal'>Fecha</Label>
-          <TextInput type="date" lang='es' onChange={e => setFecha(e.target.value)} />
+          <TextInput type="date" lang='es' onChange={e => setFecha(e.target.value)} value={fecha} />
         </div>
 
       </div>
