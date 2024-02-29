@@ -5,11 +5,13 @@ import HomeMainCard from "./components/HomeComponents/HomeMainCard"
 import Login from "./components/Login/Login"
 import Register from "./components/Login/Register"
 import { UserProvider } from "./context/UserPrivider"
+import './index.css'
 
 function App() {
 
+
   return (
-    <div className="bg-gray-800 h-full">
+    <div className="dark:bg-gray-800 min-h-full">
       <UserProvider>
         <NavBar></NavBar>
         <Routes>

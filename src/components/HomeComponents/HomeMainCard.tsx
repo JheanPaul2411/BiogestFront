@@ -28,14 +28,14 @@ export default function HomeMainCard() {
     ];
 
     return (
-        <div className="h-fit w-full flex flex-col items-center my-10">
+        <div id='HomeMainCard' className="min-h-fit max-h-full w-full flex flex-col items-center my-10">
 
             <section id={"main-home"} className='p-5 w-[100%] sm:w-[90%]
            flex items-center justify-center rounded-md'>
                 <h1 className='z-10 font-semibold text-4xl text-center text-white'>Somos el mejor consultorio médico de Quito</h1>
             </section>
 
-                <section className='p-5 m-12 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
+            <section className='p-5 m-12 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
                 {ofertas.map((oferta, i) => {
                     return (
                         <CardOferta key={i} titulo={oferta.titulo} descripcion={oferta.descripcion} imagen={oferta.imagen}></CardOferta>

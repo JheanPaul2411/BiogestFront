@@ -19,6 +19,7 @@ import { useContext, useEffect, useState } from "react";
 import validateToken from "../../handlers/ValidateToken";
 import UserContext from "../../context/UserPrivider";
 import { getUserByToken } from "../../handlers/GetUserById";
+import { UserRole } from "../../constants/UserRole";
 
 function NavBar() {
     const { pathname } = useLocation();
@@ -55,9 +56,9 @@ function NavBar() {
             <Navbar fluid rounded>
                 <NavbarBrand>
                     <img src={Logo} className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
+                    <DarkThemeToggle />
                 </NavbarBrand>
                 <div className="flex md:order-2">
-                    <DarkThemeToggle hidden />
 
                     {isLoggedIn ? (
                         <>
@@ -73,6 +74,10 @@ function NavBar() {
                                 <DropdownHeader>
                                     <span className="block text-sm">{user?.nombre}</span>
                                     <span className="block truncate text-sm font-medium">{user?.email}</span>
+                                    {(user?.rol !== UserRole.PACIENTE) && 
+                                        <span className="block truncate text-sm font-medium text-green-500">{user?.rol?.toLowerCase()}</span>
+                                    }
+
                                 </DropdownHeader>
                                 <DropdownItem>Mi perfil</DropdownItem>
 

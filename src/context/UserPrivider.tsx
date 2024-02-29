@@ -1,7 +1,7 @@
 
 // UserProvider.js
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { Usuario } from '../components/models/UserDto';
+import { Usuario } from '../models/User';
 import { getUserByToken } from '../handlers/GetUserById';
 
 

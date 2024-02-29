@@ -9,7 +9,10 @@ import { UserProvider } from './context/UserPrivider.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
+      <UserProvider>
         <App />
+
+      </UserProvider>
 
     </BrowserRouter>
 

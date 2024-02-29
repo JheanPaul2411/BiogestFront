@@ -17,7 +17,7 @@ const CitaForm: React.FC = () => {
     if (fecha) {
       const response = agendarCita({
         fecha: new Date(fecha),
-        pacienteId: user?.data.id,
+        pacienteId: user?.id,
         motivo,
         sintomas,
       });
