@@ -12,9 +12,8 @@ interface UserProviderProps {
 
 const initialUser: Usuario | null = null; // Valor predeterminado para el contexto
 
-const UserContext = createContext<
-  { user: Usuario | null; setUser: React.Dispatch<React.SetStateAction<Usuario | null>> }
->({ user: initialUser, setUser: () => { } });
+const UserContext = createContext<{ user: Usuario | null; setUser: React.Dispatch<React.SetStateAction<Usuario | null>> }>
+({ user: initialUser, setUser: () => { } });
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<Usuario | null>(initialUser);

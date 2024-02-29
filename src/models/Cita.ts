@@ -1,6 +1,6 @@
 export interface Cita {
     id: number;
-    fecha: string;
+    fecha: Date;
     hora: Date;
     pacienteId?: number;
     motivo: string;

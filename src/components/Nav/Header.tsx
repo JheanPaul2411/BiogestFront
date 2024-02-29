@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { handleLogout } from "../../handlers/HandleLogout";
-import Logo from "./Logo-biogest.png";
 import {
     Avatar,
     Dropdown,
@@ -55,7 +54,7 @@ function NavBar() {
 
             <Navbar fluid rounded>
                 <NavbarBrand>
-                    <img src={Logo} className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
+                    <span className="mr-3 h-6 sm:h-9 font-semibold text-purple-700 dark:text-purple-500">BioGest</span>
                     <DarkThemeToggle />
                 </NavbarBrand>
                 <div className="flex md:order-2">
@@ -74,7 +73,7 @@ function NavBar() {
                                 <DropdownHeader>
                                     <span className="block text-sm">{user?.nombre}</span>
                                     <span className="block truncate text-sm font-medium">{user?.email}</span>
-                                    {(user?.rol !== UserRole.PACIENTE) && 
+                                    {(user?.rol !== UserRole.PACIENTE) &&
                                         <span className="block truncate text-sm font-medium text-green-500">{user?.rol?.toLowerCase()}</span>
                                     }
 
@@ -109,13 +108,20 @@ function NavBar() {
 
                 </div>
 
-                <NavbarCollapse>
-                    <NavbarLink href="/" active={(pathname === '/')} color="purple">
-                        Inicio
-                    </NavbarLink>
-                    <NavbarLink href="/agendar_cita" active={(pathname === '/agendar_cita')} color="purple">Agendar Cita</NavbarLink>
-                    <NavbarLink href="/historial_medico" active={(pathname === '/historial_medico')} color="purple">Historial médico</NavbarLink>
-                </NavbarCollapse>
+                {isLoggedIn ?
+                    <>
+                        <NavbarCollapse>
+                            <NavbarLink href="/" active={(pathname === '/')} color="purple">Inicio</NavbarLink>
+                            <NavbarLink href="/agendar_cita" active={(pathname === '/agendar_cita')} color="purple">Agendar Cita</NavbarLink>
+                            <NavbarLink href="/historial_medico" active={(pathname === '/historial_medico')} color="purple">Historial médico</NavbarLink>
+                        </NavbarCollapse>
+                    </> :
+                    <>
+                        <NavbarCollapse>
+                            <NavbarLink href="/" active={(pathname === '/')} >Inicio</NavbarLink>
+                        </NavbarCollapse>
+                    </>}
+
 
             </Navbar>
 

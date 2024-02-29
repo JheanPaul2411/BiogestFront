@@ -3,6 +3,7 @@ import { Cita } from '../../../models/Cita';
 import axios, { AxiosResponse } from 'axios';
 import { baseUrl } from '../../../constants/BaseURL';
 import CardCitas from './CardCitas';
+import { headerBearer } from '../../../constants/Headers';
 
 function AllCitas() {
     const [citas, setcitas] = useState<Cita[]>([]);
@@ -10,7 +11,9 @@ function AllCitas() {
     useEffect(()=>{
         async function fetchCitas() {
             try {
-                const response: AxiosResponse<Cita[]> = await axios.get(`${baseUrl}/cita`);
+                const response: AxiosResponse<Cita[]> = await axios.get(`${baseUrl}/cita`,{
+                    headers: headerBearer()
+                });
                 if (response) {
                     setcitas(response.data);
                 }
@@ -18,11 +21,12 @@ function AllCitas() {
                 console.error(error)
             }
         }
-
+        
         fetchCitas()
-    },[citas]);
-
-
+    },[setcitas]);
+    
+    console.log(citas)
+    
     return (
         <>
             <CardCitas citas={citas}/>

@@ -22,13 +22,10 @@ function Login() {
             if (data) {
                 alert(`Te has logueado correctamente, ${data.user.nombre} ${data.user.apellido}`);
             }
-            console.log("Data:", data);
-
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
         } finally {
             window.location.reload()
-            console.log(email, password);
         }
 
     };
