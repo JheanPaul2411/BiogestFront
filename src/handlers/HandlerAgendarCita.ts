@@ -1,10 +1,10 @@
 import axios from "axios";
 import { baseUrl } from "../constants/BaseURL";
-import { CitaDTO } from "../components/AgendarCita/dto/Cita.dto";
+import { Cita } from "../components/AgendarCita/dto/Cita.dto";
 import { headerBearer } from "../constants/Headers";
 
 
-export async function agendarCita(citaDto: CitaDTO) {
+export async function agendarCita(citaDto: Cita) {
     const api = `${baseUrl}/cita`;
 
     // Crear un objeto Date con el formato adecuado (asumiendo que 'fecha' es un string en formato 'dd-MM-yyyy')
@@ -15,7 +15,7 @@ export async function agendarCita(citaDto: CitaDTO) {
     };
 
     try {
-        const response: CitaDTO = await axios.post(api, citaData, {
+        const response: Cita = await axios.post(api, citaData, {
             headers: headerBearer()
         });
         return response;

@@ -21,7 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomeMainCard></HomeMainCard>}></Route>
 
-            <Route element={<ProtectedRoutes canActive={user !== undefined} />}>
+            <Route element={<ProtectedRoutes canActive={user !== undefined || user !== null} />}>
               <Route path="/agendar_cita" element={<CitaPage></CitaPage>}></Route>
             </Route>
 

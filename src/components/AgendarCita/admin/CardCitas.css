@@ -1,3 +1,11 @@
 #citas div div span{
     @apply dark:text-gray-300 font-semibold
 }
+
+.titulos{
+    @apply font-semibold 
+}
+
+.atributos{
+    @apply dark:text-gray-400 text-gray-600
+}

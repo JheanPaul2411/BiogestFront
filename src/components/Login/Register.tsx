@@ -68,7 +68,7 @@ function Register() {
                 <Button type='submit' color='purple' className='mt-2'>
                     Registrarse
                 </Button>
-                <a href="" className="text-center text-gray-300">¿Ya tienes una cuenta? <Link className='font-bold text-blue-500' to={'/login'}>Inicia sesión</Link></a>
+                <a href="" className="text-center dark:text-gray-300">¿Ya tienes una cuenta? <Link className='font-bold text-purple-500' to={'/login'}>Inicia sesión</Link></a>
             </form>
 
         </section>
