@@ -34,7 +34,7 @@ function Register() {
             const loggeo: ApiResponse = await loginUser({ email, password });
             if (loggeo) {
                 alert('Te has registrado correctamente.')
-                sessionStorage.setItem('token', loggeo.token);
+                localStorage.setItem('token', loggeo.token);
                 window.location.reload();
                 window.location.href = '/';
             }

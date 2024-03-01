@@ -20,7 +20,7 @@ export async function loginUser(credentials: LoginCredentials): Promise<ApiRespo
         const { token } = response.data;
         const tokenVerified = await validateToken(token); // Await the result of validateToken
         if (tokenVerified) {
-            sessionStorage.setItem('token', token);
+            localStorage.setItem('token', token);
         } else {
             console.log('Token inválido');
         }

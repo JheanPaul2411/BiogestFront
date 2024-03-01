@@ -21,11 +21,10 @@ function Login() {
             const data: ApiResponse = await loginUser({ email, password });
             if (data) {
                 alert(`Te has logueado correctamente, ${data.user.nombre} ${data.user.apellido}`);
+                window.location.reload()
             }
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
-        } finally {
-            window.location.reload()
         }
 
     };

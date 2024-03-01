@@ -22,7 +22,7 @@ import { UserRole } from "../../constants/UserRole";
 
 function NavBar() {
     const { pathname } = useLocation();
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const { user, setUser } = useContext(UserContext);
 

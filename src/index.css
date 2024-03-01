@@ -10,3 +10,7 @@ html, body,#root{
 span,p,h1,h2,h3,h4{
     @apply dark:text-white
 }
+
+.btn_cancelar{
+    @apply flex-grow border-2 border-gray-600 focus:ring-2 focus:ring-gray-700 hover:bg-gray-300 hover:dark:bg-gray-800
+}

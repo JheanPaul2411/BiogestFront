@@ -11,7 +11,7 @@ import { useContext } from "react"
 
 function App() {
   const { user } = useContext(UserContext);
-
+  console.log(user)
   return (
     <div className="dark:bg-gray-800 bg-gray-200 min-h-full">
       
@@ -21,7 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomeMainCard></HomeMainCard>}></Route>
 
-            <Route element={<ProtectedRoutes canActive={user !== undefined || user !== null} />}>
+            <Route element={<ProtectedRoutes canActive={user !== null} />}>
               <Route path="/agendar_cita" element={<CitaPage></CitaPage>}></Route>
             </Route>
 

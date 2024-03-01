@@ -1,5 +1,5 @@
 export function headerBearer() {
-    const token=sessionStorage.getItem('token');
+    const token=localStorage.getItem('token');
     const header= {
         'authorization': `bearer ${token}`
     }
@@ -7,7 +7,7 @@ export function headerBearer() {
 }
 
 export function header() {
-    const token=sessionStorage.getItem('token');
+    const token=localStorage.getItem('token');
     const header= {
         'authorization': `${token}`
     }
