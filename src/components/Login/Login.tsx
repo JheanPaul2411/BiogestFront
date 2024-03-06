@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { loginUser } from '../../handlers/HandlerLogin';
 import { ApiResponse } from '../AgendarCita/dto/Login.dto';
 import { Button, TextInput } from 'flowbite-react';
+import { handleErrors } from '../../handlers/HandleErrors';
 
 
 function Login() {
@@ -24,7 +25,7 @@ function Login() {
                 window.location.reload()
             }
         } catch (error) {
-            console.error("Error al iniciar sesión:", error);
+            handleErrors(error);
         }
 
     };

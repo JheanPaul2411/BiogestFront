@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiResponse, User } from "../Pages/dto/Login.dto";
+import { ApiResponse, User } from "../components/AgendarCita/dto/Login.dto";
 
 
 export async function registerUser(credentials: User): Promise<ApiResponse> {
@@ -18,7 +18,6 @@ export async function registerUser(credentials: User): Promise<ApiResponse> {
             password: credentials.password,
             fecha_nacimiento: formattedDate,
             rol: "PACIENTE"
-
         };
 
         const response = await axios.post(apiUrl, body);

@@ -21,9 +21,6 @@ export async function getUserByToken(token:string):Promise<Usuario> {
         return user.data;
         
     } catch (error) {
-        console.log('Token',token)
-        console.log('UserID', id)
-        console.log('URL:', apiUrl)
         throw new Error(`Error: ${error}`);
         
     }
