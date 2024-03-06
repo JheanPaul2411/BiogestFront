@@ -5,9 +5,11 @@ import { registerUser } from '../../handlers/HandleRegister';
 import { ApiResponse } from '../AgendarCita/dto/Login.dto';
 import { loginUser } from '../../handlers/HandlerLogin';
 import { Button, Label, TextInput } from 'flowbite-react';
+import { useAuth } from '../../context/AuthProvider';
 
 
 function Register() {
+    const {login} = useAuth();
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [email, setEmail] = useState('');
@@ -33,10 +35,9 @@ function Register() {
 
             const loggeo: ApiResponse = await loginUser({ email, password });
             if (loggeo) {
+                login();
                 alert('Te has registrado correctamente.')
                 localStorage.setItem('token', loggeo.token);
-                window.location.reload();
-                window.location.href = '/';
             }
             console.log("Data:", data);
 

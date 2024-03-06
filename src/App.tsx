@@ -1,37 +1,32 @@
-import { Route, Routes } from "react-router-dom"
-import NavBar from "./components/Nav/Header"
-import CitaPage from "./components/AgendarCita/CitaPage"
-import HomeMainCard from "./components/HomeComponents/HomeMainCard"
-import Login from "./components/Login/Login"
-import Register from "./components/Login/Register"
-import UserContext, { UserProvider } from "./context/UserPrivider"
-import './index.css'
-import ProtectedRoutes from "./utils/ProtectedRoute"
-import { useContext } from "react"
+import { Route, Routes } from "react-router-dom";
+import NavBar from "./components/Nav/Header";
+import CitaPage from "./components/AgendarCita/CitaPage";
+import HomeMainCard from "./components/HomeComponents/HomeMainCard";
+import Login from "./components/Login/Login";
+import Register from "./components/Login/Register";
+import './index.css';
+import ProtectedRoutes from "./utils/ProtectedRoute";
+import {useAuth } from "./context/AuthProvider";
 
 function App() {
-  const { user } = useContext(UserContext);
-  console.log(user)
+  const { isLoggedIn } = useAuth();
+  console.log('Context login',isLoggedIn)
   return (
     <div className="dark:bg-gray-800 bg-gray-200 min-h-full">
-      
-
-        <UserProvider>
+      {/* Aquí utilizamos AuthProvider, no seAuth */}
           <NavBar></NavBar>
           <Routes>
             <Route path="/" element={<HomeMainCard></HomeMainCard>}></Route>
 
-            <Route element={<ProtectedRoutes canActive={user !== null} />}>
-              <Route path="/agendar_cita" element={<CitaPage></CitaPage>}></Route>
+            <Route element={<ProtectedRoutes canActivate={isLoggedIn} redirectPath="/" />}>
+              <Route path="/agendar_cita" element={<CitaPage/>}></Route>
             </Route>
 
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
           </Routes>
-        </UserProvider >
-
     </div>
   )
 }
 
-export default App
+export default App;

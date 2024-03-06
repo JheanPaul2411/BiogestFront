@@ -14,17 +14,20 @@ import {
     NavbarLink,
     NavbarToggle,
 } from 'flowbite-react';
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import validateToken from "../../handlers/ValidateToken";
 import UserContext from "../../context/UserPrivider";
 import { getUserByToken } from "../../handlers/GetUserById";
 import { UserRole } from "../../constants/UserRole";
+import { useAuth } from "../../context/AuthProvider";
 
 function NavBar() {
     const { pathname } = useLocation();
     const token = localStorage.getItem('token');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const { user, setUser } = useContext(UserContext);
+
+    const {isLoggedIn, login} = useAuth();
 
 
 
@@ -32,7 +35,7 @@ function NavBar() {
         async function fetchData() {
             try {
                 const isTokenValid = await validateToken(token);
-                setIsLoggedIn(isTokenValid);
+                login();
 
                 if (isTokenValid) {
                     const userData = await getUserByToken(token ?? '');
@@ -47,7 +50,7 @@ function NavBar() {
             fetchData();
         }
         console.log("Is logged in", isLoggedIn)
-    }, [token, isLoggedIn, setUser]);
+    }, [isLoggedIn, login, setUser, token]);
 
     return (
         <Flowbite >

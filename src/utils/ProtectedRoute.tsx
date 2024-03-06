@@ -1,16 +1,14 @@
-import { Navigate, Outlet } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom";
 
-interface Props {
-    canActive: boolean
-    redirectTo?: string
-
+interface Props{
+    canActivate:boolean,
+    redirectPath:string
 }
-function ProtectedRoutes({ canActive, redirectTo = '/' }: Props) {
-
-    if (!canActive) {
-        return <Navigate to={redirectTo} replace />
+const ProtectedRoute = ({canActivate,redirectPath = '/'}:Props) => {
+    if (!canActivate) {
+        return <Navigate to={redirectPath} replace />
     }
     return <Outlet />;
 }
 
-export default ProtectedRoutes
+export default ProtectedRoute;
