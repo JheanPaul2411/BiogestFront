@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 interface Props{
-    canActivate:boolean,
+    canActivate:unknown,
     redirectPath:string
 }
 const ProtectedRoute = ({canActivate,redirectPath = '/'}:Props) => {
+    console.log(canActivate);
     if (!canActivate) {
         return <Navigate to={redirectPath} replace />
     }

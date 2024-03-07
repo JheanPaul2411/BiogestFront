@@ -50,7 +50,7 @@ function NavBar() {
             fetchData();
         }
         console.log("Is logged in", isLoggedIn)
-    }, [isLoggedIn, login, setUser, token]);
+    }, [isLoggedIn]);
 
     return (
         <Flowbite >
