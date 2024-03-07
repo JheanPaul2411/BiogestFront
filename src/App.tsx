@@ -7,6 +7,7 @@ import Register from "./components/Login/Register";
 import './index.css';
 import ProtectedRoutes from "./utils/ProtectedRoute";
 import validateToken from "./handlers/ValidateToken";
+import PageHistorialMedico from "./components/Historial_medico/PageHistorialMedico";
 
 function App() {
   const token = validateToken(localStorage.getItem("token"));
@@ -19,6 +20,7 @@ function App() {
 
             <Route element={<ProtectedRoutes canActivate={token} redirectPath="/" />}>
               <Route path="/agendar_cita" element={<CitaPage/>}></Route>
+              <Route path="/historial_medico" element={<PageHistorialMedico/>}></Route>
             </Route>
 
             <Route path='/login' element={<Login />} />

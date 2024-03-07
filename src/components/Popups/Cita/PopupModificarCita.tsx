@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { Modal, TextInput, Button } from "flowbite-react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { Cita } from "../../../models/Cita";
 import { baseUrl } from "../../../constants/BaseURL";
 import { headerBearer } from "../../../constants/Headers";
 import { fechaConfig } from "../../../constants/FechaConfig";
-import '../../../index.css'
+import '../../../index.css';
+import { handleErrors } from "../../../handlers/HandleErrors";
+
 interface PropsPopupEditarCita {
     selectedCita: Cita;
     onClose: () => void;
+    onReagendar: (citaActualizada: Cita) => void; // Función para manejar el reagendamiento de la cita
 }
 
 const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
     selectedCita,
     onClose,
+    onReagendar,
 }) => {
     const [newDate, setNewDate] = useState("");
 
@@ -23,18 +27,17 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
         const updatedCita: Cita = { ...selectedCita, fecha: new Date(newDate) };
 
         try {
-            const response: AxiosResponse<Cita> = await axios.put(
+            await axios.put(
                 `${baseUrl}/cita/${updatedCita.id}`,
-                updatedCita,
-                {
-                    headers: headerBearer(),
-                }
+                { fecha: new Date(newDate) },
+                { headers: headerBearer() }
             );
-            console.log(response);
+            onReagendar(updatedCita); // Llamar a la función onReagendar con la cita actualizada
             onClose();
             alert("Se ha actualizado la fecha de la cita.");
+            window.location.reload();
         } catch (error) {
-            console.error("Error al actualizar la fecha de la cita:", error);
+            handleErrors(error)
         }
     }
 
@@ -48,9 +51,8 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
                 <div className="flex gap-2 my-2">
                     <span className="">Fecha actual:</span>
                     <p className="dark:text-gray-400 atributos">
-                        {/*
-                         //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            //@ts-ignore*/}
+                        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                        {/* @ts-ignore */}
                         {new Date(selectedCita.fecha).toLocaleDateString("es-ES", fechaConfig)}
                     </p>
                 </div>
