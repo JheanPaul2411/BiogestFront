@@ -30,7 +30,7 @@ function CardCitas({ citas }: Props) {
             {citas.map(cita => (
                 <div
                     key={cita.id}
-                    className={`flex flex-col w-[80%] dark:bg-gray-700 bg-gray-300 p-5 rounded-lg transition-all hover:cursor-pointer ${cita.aceptada ? 'bg-green-800/30 dark:bg-green-800/30' : ''}`}
+                    className={`citas ${cita.aceptada ? 'bg-green-800/30 dark:bg-green-800/30' : ''}`}
                 >
                     <div className="motivo flex gap-2">
                         <span className="titulos">Paciente:</span>
