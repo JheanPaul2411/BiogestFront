@@ -30,7 +30,7 @@ function CardCitas({ citas }: Props) {
             {citas.map(cita => (
                 <div
                     key={cita.id}
-                    className="flex flex-col w-[80%] dark:bg-gray-700 bg-gray-300 p-5 rounded-lg  hover:dark:bg-gray-600 transition-all hover:cursor-pointer"
+                    className={`flex flex-col w-[80%] dark:bg-gray-700 bg-gray-300 p-5 rounded-lg transition-all hover:cursor-pointer ${cita.aceptada ? 'bg-green-800/30 dark:bg-green-800/30' : ''}`}
                 >
                     <div className="motivo flex gap-2">
                         <span className="titulos">Paciente:</span>
@@ -52,10 +52,14 @@ function CardCitas({ citas }: Props) {
                             <p className="atributos">{cita.sintomas}</p>
                         </div>
                     )}
+                    <div className="motivo flex gap-2">
+                        <span className="titulos">Aceptada:</span>
+                        <p className="atributos">{cita.aceptada.toString()}</p>
+                    </div>
                     <div className="flex mt-6 gap-3">
-                        <Button color="success" className="grow"
+                        <Button color="success" className="grow" disabled={cita.aceptada}
                             onClick={() => handleconfirmarAgendacion(cita)}>Aprobar solicitud</Button>
-                        <Button onClick={() => handleReagendar(cita)} color="purple">Reagendar</Button>
+                        <Button onClick={() => handleReagendar(cita)} disabled={cita.aceptada} color="purple">Reagendar</Button>
                     </div>
                 </div>
             ))}

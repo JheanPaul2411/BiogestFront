@@ -5,7 +5,6 @@ interface Props{
     redirectPath:string
 }
 const ProtectedRoute = ({canActivate,redirectPath = '/'}:Props) => {
-    console.log(canActivate);
     if (!canActivate) {
         return <Navigate to={redirectPath} replace />
     }

@@ -2,12 +2,36 @@ import { Button, Modal } from "flowbite-react"
 import { Cita } from "../../../models/Cita";
 import { fechaConfig } from "../../../constants/FechaConfig";
 import '../../../index.css'
+import { handleErrors } from "../../../handlers/HandleErrors";
+import axios, { AxiosResponse } from "axios";
+import { baseUrl } from "../../../constants/BaseURL";
+import { headerBearer } from "../../../constants/Headers";
 
 interface Props {
     selectedCita: Cita;
     onClose: () => void
 }
+
+
+
 function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
+
+    async function confirmarCita() {
+        try {
+            
+            const response: AxiosResponse<Cita> = await axios.put(`${baseUrl}/cita/${selectedCita.id}`, {
+                aceptada:true
+            }, {headers:headerBearer()});
+    
+            if(response){
+                alert("Has confirmado esta cita")
+                onClose()
+            }
+        } catch (error) {
+            handleErrors(error);
+        }
+    }
+
     return (
         <Modal popup size={'md'} onClose={onClose} show={true}>
             <Modal.Header />
@@ -24,8 +48,8 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
                 </h2>
 
                 <div className="flex gap-3 mt-5">
-                    <Button className="grow" color="success">Confirmar</Button>
-                    <Button className="btn_cancelar" color="secondary" onClick={onClose}>Cancelar</Button>
+                    <Button className="grow" color="success" onClick={confirmarCita}>Confirmar</Button>
+                    <Button className="btn_cancelar" color="secondary" onClick={onClose} disabled={selectedCita.aceptada}>Cancelar</Button>
 
                 </div>
             </Modal.Body>

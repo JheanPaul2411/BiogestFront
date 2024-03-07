@@ -17,4 +17,5 @@ export interface Cita {
   motivo: string;
   minutos?: number;
   sintomas?: string;
+  aceptada:boolean;
 }
