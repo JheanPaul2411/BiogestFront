@@ -24,9 +24,7 @@ function AllCitas() {
         
         fetchCitas()
     },[setcitas]);
-    
-    console.log(citas)
-    
+        
     return (
         <>
             <CardCitas citas={citas}/>

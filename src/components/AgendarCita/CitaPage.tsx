@@ -24,7 +24,6 @@ function AgendarCita() {
           <AllCitas />
         </>
       }
-
     </main>
 
   )

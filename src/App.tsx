@@ -20,6 +20,9 @@ function App() {
 
             <Route element={<ProtectedRoutes canActivate={token} redirectPath="/" />}>
               <Route path="/agendar_cita" element={<CitaPage/>}></Route>
+            </Route>
+
+            <Route element={<ProtectedRoutes canActivate={token} redirectPath="/" />}>
               <Route path="/historial_medico" element={<PageHistorialMedico/>}></Route>
             </Route>
 

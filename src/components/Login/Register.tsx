@@ -38,6 +38,7 @@ function Register() {
                 login();
                 alert('Te has registrado correctamente.')
                 localStorage.setItem('token', loggeo.token);
+                window.location.href='/';
             }
             console.log("Data:", data);
 

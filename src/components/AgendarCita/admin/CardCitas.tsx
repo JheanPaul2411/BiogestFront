@@ -8,6 +8,7 @@ import axios from "axios";
 import './CardCitas.css';
 import { headerBearer } from "../../../constants/Headers";
 import { baseUrl } from "../../../constants/BaseURL";
+import { isAproabda } from "../../../handlers/HandlerCitas";
 
 interface Props {
     citas: Cita[];
@@ -111,7 +112,7 @@ function CardCitas({ citas }: Props) {
                             )}
                             <div className="col-span-1 motivo flex gap-2">
                                 <span className="titulos">Aceptada:</span>
-                                <p className="atributos">{cita.aceptada.toString()}</p>
+                                <p className="atributos">{isAproabda(cita.aceptada)}</p>
                             </div>
                         </div>
                         <div className="col-span-1 flex mt-6 gap-3">

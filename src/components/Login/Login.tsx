@@ -19,6 +19,7 @@ function Login() {
             if (data) {
                 login(); // Aquí llamamos a la función login para cambiar el estado de logueo a true
                 alert(`Te has logueado correctamente, ${data.user.nombre} ${data.user.apellido}`);
+                window.location.href='/';
             }
         } catch (error) {
             handleErrors(error);
