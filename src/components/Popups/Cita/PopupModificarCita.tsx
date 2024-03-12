@@ -4,9 +4,9 @@ import axios from "axios";
 import { Cita } from "../../../models/Cita";
 import { baseUrl } from "../../../constants/BaseURL";
 import { headerBearer } from "../../../constants/Headers";
-import { fechaConfig } from "../../../constants/FechaConfig";
 import '../../../index.css';
 import { handleErrors } from "../../../handlers/HandleErrors";
+import { parseDate } from "../../../handlers/ParseDate";
 
 interface PropsPopupEditarCita {
     selectedCita: Cita;
@@ -51,9 +51,8 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
                 <div className="flex gap-2 my-2">
                     <span className="">Fecha actual:</span>
                     <p className="dark:text-gray-400 atributos">
-                        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                        {/* @ts-ignore */}
-                        {new Date(selectedCita.fecha).toLocaleDateString("es-ES", fechaConfig)}
+                        
+                        {parseDate(selectedCita.fecha)}
                     </p>
                 </div>
                 <div className="flex items-center gap-2">

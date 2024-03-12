@@ -1,11 +1,11 @@
 import { Button, Modal } from "flowbite-react"
 import { Cita } from "../../../models/Cita";
-import { fechaConfig } from "../../../constants/FechaConfig";
 import '../../../index.css'
 import { handleErrors } from "../../../handlers/HandleErrors";
 import axios, { AxiosResponse } from "axios";
 import { baseUrl } from "../../../constants/BaseURL";
 import { headerBearer } from "../../../constants/Headers";
+import { parseDate } from "../../../handlers/ParseDate";
 
 interface Props {
     selectedCita: Cita;
@@ -39,10 +39,7 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
                 <h2 className="text-center">
                     ¿Seguro que deseas aceptar la cita para el &nbsp;
                     <span className="titulos dark:text-purple-400 text-center">
-                        {/*
-                        //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            //@ts-ignore*/
-                            new Date(selectedCita.fecha).toLocaleDateString("es-ES", fechaConfig)}
+                        {parseDate(selectedCita.fecha)}
                     </span>?
 
                 </h2>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Cita } from "../../../models/Cita";
-import { fechaConfig } from "../../../constants/FechaConfig";
 import PopupEditarCita from "../../Popups/Cita/PopupModificarCita";
 import { Button } from "flowbite-react";
 import PopupConfirmarAgendacion from "../../Popups/Cita/PopupConfirmarAgendacion";
@@ -9,6 +8,7 @@ import './CardCitas.css';
 import { headerBearer } from "../../../constants/Headers";
 import { baseUrl } from "../../../constants/BaseURL";
 import { isAproabda } from "../../../handlers/HandlerCitas";
+import { parseDate } from "../../../handlers/ParseDate";
 
 interface Props {
     citas: Cita[];
@@ -98,7 +98,7 @@ function CardCitas({ citas }: Props) {
                                 <span className="titulos">Fecha de la cita:</span>
                                 {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                                 {/* @ts-ignore */}
-                                <h2 className="atributos"> &nbsp; {new Date(cita.fecha).toLocaleDateString("es-ES", fechaConfig)}</h2>
+                                <h2 className="atributos"> &nbsp; {parseDate(cita.fecha)}</h2>
                             </div>
                             <div className="col-span-1 motivo flex gap-2">
                                 <span className="titulos">Motivo de la cita:</span>
