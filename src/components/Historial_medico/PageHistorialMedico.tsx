@@ -73,7 +73,7 @@ function PageHistorialMedico() {
             {user?.rol !== UserRole.PACIENTE &&
                 <>
                     <h1>Pacientes</h1>
-                    <Table data={users} columns={columns} />
+                    <Table data={users} columns={columns} filterPlaceholder={'Busacr paciente'} />
                 </>
             }
         </main>

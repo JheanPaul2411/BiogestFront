@@ -6,9 +6,10 @@ interface Props {
     data: object,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    columns: ColumnHelper[]
+    columns: ColumnHelper[],
+    filterPlaceholder:string
 }
-function Table({ data, columns }: Props) {
+function Table({ data, columns, filterPlaceholder }: Props) {
     const [sorting, setSorting] = useState<ColumnSort[]>([]);
     const [inputFilter, setinputFilter] = useState('')
 
@@ -34,7 +35,7 @@ function Table({ data, columns }: Props) {
 
     return (
         <div className="my-5">
-            <TextInput placeholder='Buscar paciente' onChange={e => setinputFilter(e.target.value)} value={inputFilter} />
+            <TextInput placeholder={filterPlaceholder} onChange={e => setinputFilter(e.target.value)} value={inputFilter} />
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 my-5">
                 <thead className="bg-gray-100 dark:bg-gray-700">
                     {table.getHeaderGroups().map(headerGroup => (
