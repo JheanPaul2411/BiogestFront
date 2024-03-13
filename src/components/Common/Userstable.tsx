@@ -1,45 +1,44 @@
-import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, getFilteredRowModel, ColumnHelper } from '@tanstack/react-table';
+import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, getFilteredRowModel, ColumnHelper, getPaginationRowModel } from '@tanstack/react-table';
 import { useState } from 'react';
 import { Button, TextInput } from 'flowbite-react';
 
 interface Props {
-    data: object,
+    data: object[],
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     columns: ColumnHelper[],
-    filterPlaceholder:string
+    filterPlaceholder: string
 }
 function Table({ data, columns, filterPlaceholder }: Props) {
     const [sorting, setSorting] = useState<ColumnSort[]>([]);
-    const [inputFilter, setinputFilter] = useState('')
-
-
-
-
+    const [globalFilter, setGlobalFilter] = useState('');
 
     const table = useReactTable({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        data: data,
+        data,
         columns,
+        getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         state: {
             sorting,
-            globalFilter: inputFilter
+            globalFilter,
         },
         onSortingChange: setSorting,
-        onGlobalFilterChange: setinputFilter
+        onGlobalFilterChange: setGlobalFilter,
     });
 
     return (
         <div className="my-5">
-            <TextInput placeholder={filterPlaceholder} onChange={e => setinputFilter(e.target.value)} value={inputFilter} />
+            <TextInput placeholder={filterPlaceholder} onChange={e => setGlobalFilter(e.target.value)} value={globalFilter} />
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 my-5">
                 <thead className="bg-gray-100 dark:bg-gray-700">
                     {table.getHeaderGroups().map(headerGroup => (
-                        <tr key={headerGroup.id}>
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        <tr key={data.id}>
                             {headerGroup.headers.map(header => {
                                 return (
                                     <th
@@ -76,10 +75,10 @@ function Table({ data, columns, filterPlaceholder }: Props) {
 
             <div className="flex justify-between items-center">
                 <div className="paginacion flex gap-2 my-3">
-                    <Button color='gray' onClick={() => table.setPageIndex(0)}>Primera página</Button>
-                    <Button color='gray' onClick={() => table.previousPage()}>Página siguiente</Button>
-                    <Button color='gray' onClick={() => table.nextPage()}>Página Anterior</Button>
-                    <Button color='gray' onClick={() => table.setPageIndex(table.getPageCount() - 1)}>Última página</Button>
+                    <Button color='gray' onClick={() => table.setPageIndex(0)} disabled={table.getState().pagination.pageIndex === 0}>Primera página</Button>
+                    <Button color='gray' onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Página anterior</Button>
+                    <Button color='gray' onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Página siguiente</Button>
+                    <Button color='gray' onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={table.getState().pagination.pageIndex === table.getPageCount() - 1}>Última página</Button>
                 </div>
                 <div>
                     <span>

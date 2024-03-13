@@ -56,7 +56,7 @@ function PageHistorialMedico() {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const response: AxiosResponse<User[]> = await axios.get(`${baseUrl}/usuarios`, {
+                const response: AxiosResponse<User[]> = await axios.get(`${baseUrl}/usuarios/rol/${UserRole.PACIENTE}`, {
                     headers: headerBearer(),
                 });
                 setUsers(response.data);
