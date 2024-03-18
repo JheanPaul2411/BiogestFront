@@ -1,19 +1,10 @@
-import { UserRole } from "../constants/UserRole";
+import { Paciente } from "./Paciente";
 
 export interface Cita {
   id?: number;
   fecha: Date;
   hora?: Date;
-  paciente: {
-    id: number
-    nombre: string,
-    apellido: string,
-    cedula: string,
-    fecha_nacimiento: Date,
-    email: string,
-    contacto: string,
-    rol: UserRole
-  };
+  paciente: Paciente;
   motivo: string;
   minutos?: number;
   sintomas?: string;

@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react'
 import '../../index.css'
 import UserContext from '../../context/UserPrivider'
 import { UserRole } from '../../constants/UserRole';
-import Table from '../Common/Userstable';
 import { createColumnHelper } from '@tanstack/react-table';
 import { User } from '../AgendarCita/dto/Login.dto';
 import axios, { AxiosResponse } from 'axios';
@@ -10,6 +9,7 @@ import { headerBearer } from '../../constants/Headers';
 import { handleErrors } from '../../handlers/HandleErrors';
 import { baseUrl } from '../../constants/BaseURL';
 import { parseDate } from '../../handlers/ParseDate';
+import PacientesTable from '../Common/PacientesTable';
 
 function PageHistorialMedico() {
     const { user } = useContext(UserContext);
@@ -47,10 +47,6 @@ function PageHistorialMedico() {
             header: 'Contacto',
             cell: info => info.getValue(),
         }),
-        columnHelper.accessor('rol', {
-            header: 'Rol',
-            cell: info => info.getValue(),
-        }),
     ];
 
     useEffect(() => {
@@ -73,7 +69,7 @@ function PageHistorialMedico() {
             {user?.rol !== UserRole.PACIENTE &&
                 <>
                     <h1>Pacientes</h1>
-                    <Table data={users} columns={columns} filterPlaceholder={'Busacr paciente'} />
+                    <PacientesTable data={users} columns={columns} filterPlaceholder={'Busacr paciente'} />
                 </>
             }
         </main>

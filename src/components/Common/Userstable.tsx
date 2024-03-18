@@ -9,7 +9,7 @@ interface Props {
     columns: ColumnHelper[],
     filterPlaceholder: string
 }
-function Table({ data, columns, filterPlaceholder }: Props) {
+function UsersTable({ data, columns, filterPlaceholder }: Props) {
     const [sorting, setSorting] = useState<ColumnSort[]>([]);
     const [globalFilter, setGlobalFilter] = useState('');
 
@@ -94,4 +94,4 @@ function Table({ data, columns, filterPlaceholder }: Props) {
     );
 }
 
-export default Table;
+export default UsersTable;
