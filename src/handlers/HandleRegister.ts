@@ -1,5 +1,7 @@
 import axios from "axios";
 import { ApiResponse, User } from "../components/AgendarCita/dto/Login.dto";
+import { baseUrl } from "../constants/BaseURL";
+import { handleErrors } from "./HandleErrors";
 
 
 export async function registerUser(credentials: User): Promise<ApiResponse> {
@@ -7,7 +9,6 @@ export async function registerUser(credentials: User): Promise<ApiResponse> {
         const [year, month, day] = credentials.fecha_nacimiento.split('-');
         const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
-        const baseUrl = import.meta.env.VITE_BACKEND_URL;
         const apiUrl = `${baseUrl}/auth/register`
         const body: User = {
             nombre: credentials.nombre,
@@ -17,13 +18,18 @@ export async function registerUser(credentials: User): Promise<ApiResponse> {
             email: credentials.email,
             password: credentials.password,
             fecha_nacimiento: formattedDate,
+            photoUrl:credentials.photoUrl,
             rol: "PACIENTE"
         };
 
-        const response = await axios.post(apiUrl, body);
+        const response = await axios.post(apiUrl, body, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+        });
         return response.data;
     } catch (error) {
-        console.warn(error);
+        handleErrors(error)
         throw error;
     }
 

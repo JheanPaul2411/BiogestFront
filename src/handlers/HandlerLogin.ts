@@ -12,8 +12,8 @@ export async function loginUser(credentials: LoginCredentials): Promise<ApiRespo
         const baseUrl = import.meta.env.VITE_BACKEND_URL;
         const apiUrl = `${baseUrl}/auth/login`;
         const body = {
-            email: credentials.email,
-            password: credentials.password
+            email: credentials.email!,
+            password: credentials.password || "", // Asignar una cadena vacía si password es undefined
         };
         
         const response = await axios.post(apiUrl, body);
