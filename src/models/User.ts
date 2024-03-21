@@ -7,6 +7,7 @@ export interface Usuario {
   email?: string;
   password?: string;
   contacto?: string;
+  photoUrl?:string;
   rol?: string; // Puedes cambiar el tipo según tus necesidades
 
 

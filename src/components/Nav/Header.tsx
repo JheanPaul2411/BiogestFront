@@ -50,7 +50,7 @@ function NavBar() {
             fetchData();
         }
         console.log("Is logged in", isLoggedIn)
-    }, [isLoggedIn]);
+    }, [isLoggedIn, login, setUser, token]);
 
     return (
         <Flowbite >
@@ -68,7 +68,7 @@ function NavBar() {
                                 arrowIcon={false}
                                 inline
                                 label={
-                                    <Avatar rounded />
+                                    <Avatar img={`${user?.photoUrl}`} rounded className="profile-picture"/>
                                 }
                                 className="z-[500]"
                             >
@@ -96,7 +96,7 @@ function NavBar() {
                                 arrowIcon={false}
                                 inline
                                 label={
-                                    <Avatar rounded />
+                                    <Avatar rounded img={user?.photoUrl}/>
                                 }
                             >
 

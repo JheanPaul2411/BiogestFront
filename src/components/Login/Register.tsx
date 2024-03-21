@@ -22,8 +22,15 @@ function Register() {
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
-        console.log(user);
         try {
+            if (user.photoUrl) {
+                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.webp|\.bmp|\.tiff)$/i;
+                if (!allowedExtensions.exec(user.photoUrl?.name)) {
+                    alert('Por favor, selecciona un archivo de imagen válido (jpg, jpeg, png, webp, bmp, tiff).');
+                    return;
+                }
+            }
+
             const data: ApiResponse = await registerUser(user);
             const loggeo: ApiResponse = await loginUser({ email: user.email, password: user.password! });
             if (loggeo) {
