@@ -79,6 +79,7 @@ function NavBar() {
                                     {(user?.rol !== UserRole.PACIENTE) &&
                                         <span className="block truncate text-sm font-medium text-green-500">{user?.rol?.toLowerCase()}</span>
                                     }
+                                    
 
                                 </DropdownHeader>
                                 <DropdownItem>Mi perfil</DropdownItem>

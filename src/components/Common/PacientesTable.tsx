@@ -1,11 +1,11 @@
 import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, getFilteredRowModel, ColumnHelper, getPaginationRowModel } from '@tanstack/react-table';
 import { useState } from 'react';
-import { Button, TextInput } from 'flowbite-react';
+import { Avatar, Button, TextInput } from 'flowbite-react';
 import PopupDetallesTabla from '../Popups/Historial_medico/PopupDetalles';
-import { User } from '../AgendarCita/dto/Login.dto';
+import { Usuario } from '../../models/User';
 
 interface Props {
-    data: User[],
+    data: Usuario[],
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     columns: ColumnHelper[],
@@ -15,7 +15,7 @@ function PacientesTable({ data, columns, filterPlaceholder }: Props) {
     const [sorting, setSorting] = useState<ColumnSort[]>([]);
     const [globalFilter, setGlobalFilter] = useState('');
     const [showPopupDetalles, setShowPopupDetalles] = useState(false);
-    const [selectedUser, setSetselectedHistorial] = useState<User>()
+    const [selectedUser, setSetselectedHistorial] = useState<Usuario>()
 
 
     const table = useReactTable({
@@ -77,7 +77,13 @@ function PacientesTable({ data, columns, filterPlaceholder }: Props) {
                                     key={cell.id}
                                     className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
                                 >
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    <div className='flex items-center justify-start gap-5'>
+
+                                        {cell.column.id === 'nombre' && (
+                                            <Avatar img={data.find(d=>d.id==parseInt(row.getValue('id')))?.photoUrl} rounded />
+                                        )}
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </div>
                                 </td>
                             ))}
                         </tr>

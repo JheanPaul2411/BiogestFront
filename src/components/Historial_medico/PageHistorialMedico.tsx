@@ -3,19 +3,18 @@ import '../../index.css'
 import UserContext from '../../context/UserPrivider'
 import { UserRole } from '../../constants/UserRole';
 import { createColumnHelper } from '@tanstack/react-table';
-import { User } from '../AgendarCita/dto/Login.dto';
 import axios, { AxiosResponse } from 'axios';
 import { headerBearer } from '../../constants/Headers';
 import { handleErrors } from '../../handlers/HandleErrors';
 import { baseUrl } from '../../constants/BaseURL';
 import { parseDate } from '../../handlers/ParseDate';
 import PacientesTable from '../Common/PacientesTable';
+import { Usuario } from '../../models/User';
 
 function PageHistorialMedico() {
     const { user } = useContext(UserContext);
-    const [users, setUsers] = useState<User[]>([]);
-
-    const columnHelper = createColumnHelper<User>();
+    const [users, setUsers] = useState<Usuario[]>([]);
+    const columnHelper = createColumnHelper<Usuario>();
 
     const columns = [
         columnHelper.accessor('id', {
@@ -52,7 +51,7 @@ function PageHistorialMedico() {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const response: AxiosResponse<User[]> = await axios.get(`${baseUrl}/usuarios/rol/${UserRole.PACIENTE}`, {
+                const response: AxiosResponse<Usuario[]> = await axios.get(`${baseUrl}/usuarios/rol/${UserRole.PACIENTE}`, {
                     headers: headerBearer(),
                 });
                 setUsers(response.data);

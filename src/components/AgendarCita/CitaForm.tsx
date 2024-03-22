@@ -11,11 +11,11 @@ const CitaForm: React.FC = () => {
   const { user } = useContext(UserContext)
   const [motivo, setMotivo] = useState('')
   const [sintomas, setSintomas] = useState('')
-
+  const [hora, setHora] = useState('')
 
   const handleSendCita = () => {
     const response = agendarCita({
-      fecha: new Date(fecha),
+      fecha: new Date(`${fecha.toString()} ${hora.toString()}`),
       pacienteId: user?.id,
       motivo,
       sintomas,
@@ -24,6 +24,7 @@ const CitaForm: React.FC = () => {
     setMotivo('');
     setSintomas('');
     setFecha('');
+    setHora('');
     console.log(response)
     alert("Has solicitado la cita correctamente");
 
@@ -50,6 +51,11 @@ const CitaForm: React.FC = () => {
         <div className="">
           <Label className='font-normal'>Fecha</Label>
           <TextInput type="date" lang='es' onChange={e => setFecha(e.target.value)} value={fecha} />
+        </div>
+
+        <div>
+          <Label className='font-normal'>Hora tentativa</Label>
+          <TextInput type='time' min="08:00" max="18:00" value={hora} onChange={e=>setHora(e.target.value)}/>
         </div>
 
       </div>

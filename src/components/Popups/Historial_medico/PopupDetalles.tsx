@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import '../../../index.css';
-import { User } from "../../AgendarCita/dto/Login.dto";
 import PopupVerHistorial from "./PopupVerHistorial";
 import PopupAgregarHistorial from "./PopupAgregarHistorial";
+import { Usuario } from "../../../models/User";
 
 interface PorpsPopup {
-    selectedUser: User;
+    selectedUser: Usuario;
     onClose: () => void;
 }
 

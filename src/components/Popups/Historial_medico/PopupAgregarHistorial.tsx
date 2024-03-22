@@ -1,11 +1,11 @@
 import { Button, Label, Modal, TextInput, Textarea } from "flowbite-react";
-import { User } from "../../AgendarCita/dto/Login.dto";
 import { handleErrors } from "../../../handlers/HandleErrors";
 import { useState } from "react";
 import { HistorialMedico } from "../../../models/HistorialMedico";
+import { Usuario } from "../../../models/User";
 
 interface PropsPopupEditarCita {
-    selectedUser: User;
+    selectedUser: Usuario;
     onClose: () => void;
 }
 

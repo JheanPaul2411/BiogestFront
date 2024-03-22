@@ -7,7 +7,7 @@ export interface User {
     email: string;
     contacto: string;
     password?: string;
-    photoUrl?:File | null;
+    photoUrl?:File | null ;
     rol?: string;
 }
 

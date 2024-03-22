@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "flowbite-react";
 import '../../../index.css';
-import { User } from "../../AgendarCita/dto/Login.dto";
 import { HistorialMedico } from "../../../models/HistorialMedico";
 import axios from "axios";
 import { baseUrl } from "../../../constants/BaseURL";
@@ -9,9 +8,10 @@ import { handleErrors } from "../../../handlers/HandleErrors";
 import { headerBearer } from "../../../constants/Headers";
 import HistorialTable from "../../Common/HistorialTable";
 import { createColumnHelper } from "@tanstack/react-table";
+import { Usuario } from "../../../models/User";
 
 interface PropsPopupEditarCita {
-    selectedUser: User;
+    selectedUser: Usuario;
     onClose: () => void;
 }
 
