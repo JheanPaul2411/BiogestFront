@@ -1,17 +1,22 @@
 import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, getFilteredRowModel, ColumnHelper, getPaginationRowModel } from '@tanstack/react-table';
 import { useState } from 'react';
-import { Button, TextInput } from 'flowbite-react';
+import { Avatar, Button, TextInput } from 'flowbite-react';
+import PopupDetallesTabla from '../Popups/Historial_medico/PopupDetalles';
+import { Usuario } from '../../models/User';
 
 interface Props {
-    data: object[],
+    data: Usuario[],
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     columns: ColumnHelper[],
     filterPlaceholder: string
 }
-function UsersTable({ data, columns, filterPlaceholder }: Props) {
+export default function UsersTable({ data, columns, filterPlaceholder }: Props) {
     const [sorting, setSorting] = useState<ColumnSort[]>([]);
     const [globalFilter, setGlobalFilter] = useState('');
+    const [showPopupDetalles, setShowPopupDetalles] = useState(false);
+    const [selectedUser, setSetselectedHistorial] = useState<Usuario>()
+
 
     const table = useReactTable({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -42,8 +47,8 @@ function UsersTable({ data, columns, filterPlaceholder }: Props) {
                             {headerGroup.headers.map(header => {
                                 return (
                                     <th
-                                        key={header.id}
                                         scope="col"
+                                        key={header.id}
                                         onClick={header.column.getToggleSortingHandler()}
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
                                     >
@@ -59,13 +64,26 @@ function UsersTable({ data, columns, filterPlaceholder }: Props) {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-700 dark:divide-gray-700">
                     {table.getRowModel().rows.map(row => (
-                        <tr key={row.id} className='dark:hover:bg-gray-600 hover:bg-gray-300'>
+                        <tr key={row.id} className='dark:hover:bg-gray-600 hover:bg-gray-300'
+                            onClick={() => {
+                                setShowPopupDetalles(true)
+                                setSetselectedHistorial(data.find(
+                                    d => d.id === parseInt(row.getValue('id'))
+                                ))
+                            }}>
+
                             {row.getVisibleCells().map(cell => (
                                 <td
                                     key={cell.id}
                                     className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
                                 >
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    <div className='flex items-center justify-start gap-5'>
+
+                                        {cell.column.id === 'nombre' && (
+                                            <Avatar img={data.find(d=>d.id==parseInt(row.getValue('id')))?.photoUrl} rounded />
+                                        )}
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </div>
                                 </td>
                             ))}
                         </tr>
@@ -90,8 +108,9 @@ function UsersTable({ data, columns, filterPlaceholder }: Props) {
                 </div>
 
             </div>
+            {showPopupDetalles && selectedUser && (
+                <PopupDetallesTabla selectedUser={selectedUser} onClose={() => setShowPopupDetalles(false)} />
+            )}
         </div>
     );
 }
-
-export default UsersTable;

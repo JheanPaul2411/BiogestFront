@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/Nav/Header";
-import CitaPage from "./components/AgendarCita/CitaPage";
 import HomeMainCard from "./components/HomeComponents/HomeMainCard";
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
@@ -8,6 +7,8 @@ import './index.css';
 import ProtectedRoutes from "./utils/ProtectedRoute";
 import validateToken from "./handlers/ValidateToken";
 import PageHistorialMedico from "./components/Historial_medico/PageHistorialMedico";
+import CitaPage from "./pages/CitaPage";
+import Usuarios from "./pages/Usuarios";
 
 function App() {
   const token = validateToken(localStorage.getItem("token"));
@@ -24,6 +25,10 @@ function App() {
 
             <Route element={<ProtectedRoutes canActivate={token} redirectPath="/" />}>
               <Route path="/historial_medico" element={<PageHistorialMedico/>}></Route>
+            </Route>
+
+            <Route element={<ProtectedRoutes canActivate={token} redirectPath="/" />}>
+              <Route path="/usuarios" element={<Usuarios/>}></Route>
             </Route>
 
             <Route path='/login' element={<Login />} />

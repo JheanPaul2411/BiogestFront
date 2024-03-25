@@ -2,51 +2,18 @@ import { useContext, useEffect, useState } from 'react'
 import '../../index.css'
 import UserContext from '../../context/UserPrivider'
 import { UserRole } from '../../constants/UserRole';
-import { createColumnHelper } from '@tanstack/react-table';
 import axios, { AxiosResponse } from 'axios';
 import { headerBearer } from '../../constants/Headers';
 import { handleErrors } from '../../handlers/HandleErrors';
 import { baseUrl } from '../../constants/BaseURL';
-import { parseDate } from '../../handlers/ParseDate';
 import PacientesTable from '../Common/PacientesTable';
 import { Usuario } from '../../models/User';
+import { columnsUser } from '../../constants/table_columns/UsersTable';
 
 function PageHistorialMedico() {
     const { user } = useContext(UserContext);
     const [users, setUsers] = useState<Usuario[]>([]);
-    const columnHelper = createColumnHelper<Usuario>();
-
-    const columns = [
-        columnHelper.accessor('id', {
-            header: 'ID',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('nombre', {
-            header: 'Nombre',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('apellido', {
-            header: 'Apellido',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('cedula', {
-            header: 'Cédula',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('fecha_nacimiento', {
-            header: 'Fecha de Nacimiento',
-            cell: info => parseDate(info.getValue()),
-
-        }),
-        columnHelper.accessor('email', {
-            header: 'Email',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('contacto', {
-            header: 'Contacto',
-            cell: info => info.getValue(),
-        }),
-    ];
+    
 
     useEffect(() => {
         async function fetchUsers() {
@@ -68,7 +35,7 @@ function PageHistorialMedico() {
             {user?.rol !== UserRole.PACIENTE &&
                 <>
                     <h1>Pacientes</h1>
-                    <PacientesTable data={users} columns={columns} filterPlaceholder={'Busacr paciente'} />
+                    <PacientesTable data={users} columns={columnsUser} filterPlaceholder={'Busacr paciente'} />
                 </>
             }
         </main>

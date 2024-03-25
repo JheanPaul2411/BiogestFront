@@ -7,6 +7,7 @@ export function handleErrors(error: unknown) {
 
         if (error.response?.status === 403) {
             alert('No tienes permiso para acceder a este recurso');
+            return;
         }
         alert(error.response?.data.message);
 
