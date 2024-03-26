@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import { Cita } from "../../../models/Cita";
 import PopupEditarCita from "../../Popups/Cita/PopupModificarCita";
 import { Button } from "flowbite-react";
 import PopupConfirmarAgendacion from "../../Popups/Cita/PopupConfirmarAgendacion";
 import axios from "axios";
 import './CardCitas.css';
-import { headerBearer } from "../../../constants/Headers";
-import { baseUrl } from "../../../constants/BaseURL";
-import { isAproabda } from "../../../handlers/HandlerCitas";
-import { parseDate } from "../../../handlers/ParseDate";
+import { baseUrl } from "../../../helpers/constants/BaseURL";
+import { headerBearer } from "../../../helpers/constants/Headers";
+import { isAproabda } from "../../../helpers/handlers/HandlerCitas";
+import { Cita } from "../../../helpers/models/Cita";
+import { parseDate } from "../../../helpers/handlers/ParseDate";
+
 
 interface Props {
     citas: Cita[];

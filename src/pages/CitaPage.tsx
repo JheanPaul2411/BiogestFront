@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import UserContext from "../context/UserPrivider";
-import { UserRole } from "../constants/UserRole";
+
 import CitaForm from "../components/AgendarCita/CitaForm";
 import AllCitas from "../components/AgendarCita/admin/AllCitas";
+import UserContext from "../helpers/context/UserPrivider";
+import { UserRole } from "../helpers/constants/UserRole";
 
 
 function AgendarCita() {

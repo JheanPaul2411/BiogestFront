@@ -1,6 +1,6 @@
-import { CardOferta } from './CardOferta'
-import './HomeMainCard.css'
-export default function HomeMainCard() {
+import { CardOferta } from '../components/HomeComponents/CardOferta'
+import './css/HomeMainCard.css'
+export default function Home() {
 
     const ofertas = [
         {

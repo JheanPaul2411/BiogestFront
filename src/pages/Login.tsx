@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Login.css';
-import { loginUser } from '../../handlers/HandlerLogin';
-import { ApiResponse } from '../AgendarCita/dto/Login.dto';
-import { Button, TextInput } from 'flowbite-react';
-import { handleErrors } from '../../handlers/HandleErrors';
-import { useAuth } from '../../context/AuthProvider';
+import './css/Login.css'
+import { TextInput, Button } from 'flowbite-react';
+import { ApiResponse } from '../components/AgendarCita/dto/Login.dto';
+import { useAuth } from '../helpers/context/AuthProvider';
+import { handleErrors } from '../helpers/handlers/HandleErrors';
+import { loginUser } from '../helpers/handlers/HandlerLogin';
 
 function Login() {
     const [email, setEmail] = useState('');

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import './Login.css';
+import './css/Login.css'
 import { useState } from 'react';
-import { registerUser } from '../../handlers/HandleRegister';
-import { ApiResponse, User } from '../AgendarCita/dto/Login.dto';
-import { loginUser } from '../../handlers/HandlerLogin';
+import { ApiResponse, User } from '../components/AgendarCita/dto/Login.dto';
 import { Button, FileInput, Label, TextInput } from 'flowbite-react';
-import { useAuth } from '../../context/AuthProvider';
+import { useAuth } from '../helpers/context/AuthProvider';
+import { registerUser } from '../helpers/handlers/HandleRegister';
+import { loginUser } from '../helpers/handlers/HandlerLogin';
 
 function Register() {
     const { login } = useAuth();

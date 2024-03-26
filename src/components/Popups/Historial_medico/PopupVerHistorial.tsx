@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {  } from "react";
 import { Modal } from "flowbite-react";
 import '../../../index.css';
-import { HistorialMedico } from "../../../models/HistorialMedico";
-import axios from "axios";
-import { baseUrl } from "../../../constants/BaseURL";
-import { handleErrors } from "../../../handlers/HandleErrors";
-import { headerBearer } from "../../../constants/Headers";
 import HistorialTable from "../../Common/HistorialTable";
-import { createColumnHelper } from "@tanstack/react-table";
-import { Usuario } from "../../../models/User";
+import { columnsHistorial } from "../../../helpers/constants/table_columns/HistorialMTable";
+import useHistorial from "../../../helpers/hooks/useHistorial";
+import { Usuario } from "../../../helpers/models/User";
+
 
 interface PropsPopupEditarCita {
     selectedUser: Usuario;
@@ -19,58 +16,9 @@ const PopupVerHistorial: React.FC<PropsPopupEditarCita> = ({
     selectedUser,
     onClose,
 }) => {
-    const [historialMedico, setHistorialMedico] = useState<HistorialMedico[]>([])
+    const {historialMedico} = useHistorial({id:selectedUser.id});
 
-    useEffect(() => {
-
-        async function fetchHistorial() {
-            try {
-                const response = await axios.get(`${baseUrl}/ficha-medica/${selectedUser.id}`, {
-                    headers: headerBearer()
-                })
-                if (response)
-                    setHistorialMedico(response.data)
-            } catch (error) {
-                handleErrors(error)
-            }
-        }
-
-        fetchHistorial()
-
-    }, [selectedUser.id])
-    const columnHelper = createColumnHelper<HistorialMedico>();
-
-    const columns = [
-        columnHelper.accessor('id', {
-            header: 'ID',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('alergias', {
-            header: 'Alergias',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('altura', {
-            header: 'Altura',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('antecedentesFamiliares', {
-            header: 'Antecedentes familiares',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('antecedentesPersonales', {
-            header: 'Antecedentes personales',
-            cell: info => info.getValue(),
-
-        }),
-        columnHelper.accessor('diagnostico', {
-            header: 'Diagnóstico',
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor('enfermedades', {
-            header: 'Enfermedades',
-            cell: info => info.getValue(),
-        }),
-    ];
+    
     return (
         <Modal onClose={onClose} size={"5xl"} popup show={true} className="z-50">
             <Modal.Header />
@@ -81,7 +29,7 @@ const PopupVerHistorial: React.FC<PropsPopupEditarCita> = ({
                 </div>
 
                 {historialMedico ? (
-                    <HistorialTable data={historialMedico} columns={columns} filterPlaceholder={"Buscar historiales"} />
+                    <HistorialTable data={historialMedico} columns={columnsHistorial} filterPlaceholder={"Buscar historiales"} />
                 ) : (
                     <><h2> Este paciente aún no tiene un historial médico</h2></>
                 )}

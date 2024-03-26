@@ -1,6 +1,6 @@
 import { NavbarCollapse, NavbarLink } from "flowbite-react";
-import { UserRole } from "../../constants/UserRole";
 import { useLocation } from "react-router-dom";
+import { UserRole } from "../../helpers/constants/UserRole";
 
 interface Props {
   role: string;

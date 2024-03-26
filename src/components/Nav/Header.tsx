@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import { handleLogout } from "../../handlers/HandleLogout";
 import {
   Avatar,
   Dropdown,
@@ -15,12 +14,14 @@ import {
   NavbarToggle,
 } from "flowbite-react";
 import { useContext, useEffect } from "react";
-import validateToken from "../../handlers/ValidateToken";
-import UserContext from "../../context/UserPrivider";
-import { getUserByToken } from "../../handlers/GetUserById";
-import { UserRole } from "../../constants/UserRole";
-import { useAuth } from "../../context/AuthProvider";
+
 import NavItemsByRole from "./NavItems";
+import { UserRole } from "../../helpers/constants/UserRole";
+import { useAuth } from "../../helpers/context/AuthProvider";
+import UserContext from "../../helpers/context/UserPrivider";
+import { getUserByToken } from "../../helpers/handlers/GetUserById";
+import { handleLogout } from "../../helpers/handlers/HandleLogout";
+import validateToken from "../../helpers/handlers/ValidateToken";
 
 function NavBar() {
   const { pathname } = useLocation();

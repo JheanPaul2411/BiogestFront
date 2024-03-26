@@ -1,7 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Usuario } from "../../models/User";
 import { parseDate } from "../../handlers/ParseDate";
-import { header } from "../Headers";
 
 const columnHelper = createColumnHelper<Usuario>();
 

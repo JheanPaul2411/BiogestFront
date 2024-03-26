@@ -1,8 +1,9 @@
 import { Button, Label, Modal, TextInput, Textarea } from "flowbite-react";
-import { handleErrors } from "../../../handlers/HandleErrors";
 import { useState } from "react";
-import { HistorialMedico } from "../../../models/HistorialMedico";
-import { Usuario } from "../../../models/User";
+import { handleErrors } from "../../../helpers/handlers/HandleErrors";
+import { HistorialMedico } from "../../../helpers/models/HistorialMedico";
+import { Usuario } from "../../../helpers/models/User";
+
 
 interface PropsPopupEditarCita {
     selectedUser: Usuario;
