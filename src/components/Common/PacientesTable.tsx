@@ -2,7 +2,7 @@ import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSo
 import { useState } from 'react';
 import { Avatar, Button, TextInput } from 'flowbite-react';
 import PopupDetallesTabla from '../Popups/Historial_medico/PopupDetalles';
-import { Usuario } from '../../models/User';
+import { Usuario } from '../../helpers/models/User';
 
 interface Props {
     data: Usuario[],

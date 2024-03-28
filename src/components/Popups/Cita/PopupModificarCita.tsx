@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { Modal, TextInput, Button } from "flowbite-react";
+import { baseUrl } from "@/helpers/constants/BaseURL";
+import { headerBearer } from "@/helpers/constants/Headers";
+import { handleErrors } from "@/helpers/handlers/HandleErrors";
+import { parseDate } from "@/helpers/handlers/ParseDate";
+import { Cita } from "@/helpers/models/Cita";
 import axios from "axios";
+import { Modal, TextInput, Button } from "flowbite-react";
+import { useState } from "react";
 
-import '../../../index.css';
-import { baseUrl } from "../../../helpers/constants/BaseURL";
-import { headerBearer } from "../../../helpers/constants/Headers";
-import { handleErrors } from "../../../helpers/handlers/HandleErrors";
-import { parseDate } from "../../../helpers/handlers/ParseDate";
-import { Cita } from "../../../helpers/models/Cita";
 
 
 interface PropsPopupEditarCita {

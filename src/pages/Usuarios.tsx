@@ -1,8 +1,8 @@
-import UsersTable from "../components/Common/Userstable";
+import Loading from "@/components/Common/Loading";
+import UsersTable from "@/components/Common/Userstable";
+import { columnsUser } from "@/helpers/constants/table_columns/UsersTable";
+import useUsers from "@/helpers/hooks/useUser";
 
-import Loading from "../components/Common/Loading";
-import { columnsUser } from "../helpers/constants/table_columns/UsersTable";
-import useUsers from "../helpers/hooks/useUser";
 
 export default function Usuarios() {
   const { users, loading } = useUsers();

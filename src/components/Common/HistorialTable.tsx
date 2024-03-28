@@ -1,7 +1,7 @@
 import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, getFilteredRowModel, ColumnHelper, getPaginationRowModel } from '@tanstack/react-table';
 import { useState } from 'react';
 import { Button, TextInput } from 'flowbite-react';
-import { HistorialMedico } from '../../models/HistorialMedico';
+import { HistorialMedico } from '@/helpers/models/HistorialMedico';
 
 interface Props {
     data: HistorialMedico[],

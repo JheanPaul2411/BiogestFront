@@ -1,4 +1,4 @@
-import { CardOferta } from '../components/HomeComponents/CardOferta'
+import { CardOferta } from '@/components/HomeComponents/CardOferta';
 import './css/HomeMainCard.css'
 export default function Home() {
 

@@ -1,6 +1,7 @@
+import { parseDate } from "@/helpers/handlers/ParseDate";
+import { Usuario } from "@/helpers/models/User";
 import { createColumnHelper } from "@tanstack/react-table";
-import { Usuario } from "../../models/User";
-import { parseDate } from "../../handlers/ParseDate";
+
 
 const columnHelper = createColumnHelper<Usuario>();
 

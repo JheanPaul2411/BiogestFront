@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { baseUrl } from "../constants/BaseURL";
 import { headerBearer } from "../constants/Headers";
 import { handleErrors } from "../handlers/HandleErrors";
 import { HistorialMedico } from "../models/HistorialMedico";
+
 
 interface Props {
   id?: number|undefined;

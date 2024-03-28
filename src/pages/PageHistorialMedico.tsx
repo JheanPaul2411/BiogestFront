@@ -1,10 +1,11 @@
-import { useContext} from 'react'
+import PacientesTable from '@/components/Common/PacientesTable';
+import { columnsUser } from '@/helpers/constants/table_columns/UsersTable';
+import { UserRole } from '@/helpers/constants/UserRole';
+import UserContext from '@/helpers/context/UserPrivider';
+import useUsers from '@/helpers/hooks/useUser';
+import { useContext } from 'react';
 import '../index.css'
-import PacientesTable from '../components/Common/PacientesTable';
-import { columnsUser } from '../helpers/constants/table_columns/UsersTable';
-import { UserRole } from '../helpers/constants/UserRole';
-import UserContext from '../helpers/context/UserPrivider';
-import useUsers from '../helpers/hooks/useUser';
+
 
 
 function PageHistorialMedico() {

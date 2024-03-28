@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { Cita } from "../models/Cita";
 import axios, { AxiosResponse } from "axios";
-import { headerBearer } from "../constants/Headers";
+import { useState, useEffect } from "react";
 import { baseUrl } from "../constants/BaseURL";
+import { headerBearer } from "../constants/Headers";
+import { Cita } from "../models/Cita";
+
 
 export default function useCitas() {
     const [citas, setcitas] = useState<Cita[]>([]);

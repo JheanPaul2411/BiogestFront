@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { baseUrl } from '../constants/BaseURL';
-import { handleErrors } from '../handlers/HandleErrors';
-import { Usuario } from '../models/User';
-import { headerBearer } from '../constants/Headers';
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { baseUrl } from "../constants/BaseURL";
+import { headerBearer } from "../constants/Headers";
+import { handleErrors } from "../handlers/HandleErrors";
+import { Usuario } from "../models/User";
+
 
 const useUsers = () => {
   const [users, setUsers] = useState<Usuario[]>([]);

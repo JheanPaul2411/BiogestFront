@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
-import PopupEditarCita from "../../Popups/Cita/PopupModificarCita";
-import { Button } from "flowbite-react";
-import PopupConfirmarAgendacion from "../../Popups/Cita/PopupConfirmarAgendacion";
+import PopupConfirmarAgendacion from "@/components/Popups/Cita/PopupConfirmarAgendacion";
+import PopupEditarCita from "@/components/Popups/Cita/PopupModificarCita";
+import { baseUrl } from "@/helpers/constants/BaseURL";
+import { headerBearer } from "@/helpers/constants/Headers";
+import { isAproabda } from "@/helpers/handlers/HandlerCitas";
+import { Cita } from "@/helpers/models/Cita";
 import axios from "axios";
-import './CardCitas.css';
-import { baseUrl } from "../../../helpers/constants/BaseURL";
-import { headerBearer } from "../../../helpers/constants/Headers";
-import { isAproabda } from "../../../helpers/handlers/HandlerCitas";
-import { Cita } from "../../../helpers/models/Cita";
-import { parseDate } from "../../../helpers/handlers/ParseDate";
+import { Button } from "flowbite-react";
+import { useState, useEffect } from "react";
+
 
 
 interface Props {

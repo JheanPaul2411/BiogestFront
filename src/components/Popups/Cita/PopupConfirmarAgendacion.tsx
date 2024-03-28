@@ -1,11 +1,11 @@
-import { Button, Modal } from "flowbite-react"
-import '../../../index.css'
+import { baseUrl } from "@/helpers/constants/BaseURL";
+import { headerBearer } from "@/helpers/constants/Headers";
+import { handleErrors } from "@/helpers/handlers/HandleErrors";
+import { parseDate } from "@/helpers/handlers/ParseDate";
+import { Cita } from "@/helpers/models/Cita";
 import axios, { AxiosResponse } from "axios";
-import { baseUrl } from "../../../helpers/constants/BaseURL";
-import { headerBearer } from "../../../helpers/constants/Headers";
-import { parseDate } from "../../../helpers/handlers/ParseDate";
-import { handleErrors } from "../../../helpers/handlers/HandleErrors";
-import { Cita } from "../../../helpers/models/Cita";
+import { Modal, Button } from "flowbite-react";
+
 
 interface Props {
     selectedCita: Cita;

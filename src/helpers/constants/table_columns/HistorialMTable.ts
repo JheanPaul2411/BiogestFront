@@ -1,5 +1,5 @@
+import { HistorialMedico } from "@/helpers/models/HistorialMedico";
 import { createColumnHelper } from "@tanstack/react-table";
-import { HistorialMedico } from "../../models/HistorialMedico";
 
 const columnHelper = createColumnHelper<HistorialMedico>();
 

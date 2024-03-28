@@ -1,8 +1,9 @@
-import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, getFilteredRowModel, ColumnHelper, getPaginationRowModel } from '@tanstack/react-table';
-import { useState } from 'react';
-import { Avatar, Button, TextInput } from 'flowbite-react';
-import PopupDetallesTabla from '../Popups/Historial_medico/PopupDetalles';
-import { Usuario } from '../../models/User';
+import { Usuario } from "@/helpers/models/User";
+import { ColumnSort, useReactTable, getPaginationRowModel, getCoreRowModel, getSortedRowModel, getFilteredRowModel, flexRender } from "@tanstack/react-table";
+import { TextInput, Avatar, Button } from "flowbite-react";
+import { useState, useEffect } from "react";
+import PopupDetallesUsuario from "../Popups/Usuarios/PopupDetalles";
+
 
 interface Props {
     data: Usuario[],
@@ -17,6 +18,10 @@ export default function UsersTable({ data, columns, filterPlaceholder }: Props) 
     const [showPopupDetalles, setShowPopupDetalles] = useState(false);
     const [selectedUser, setSetselectedHistorial] = useState<Usuario>()
 
+    useEffect(() => {
+      
+    }, [data])
+    
 
     const table = useReactTable({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -109,7 +114,7 @@ export default function UsersTable({ data, columns, filterPlaceholder }: Props) 
 
             </div>
             {showPopupDetalles && selectedUser && (
-                <PopupDetallesTabla selectedUser={selectedUser} onClose={() => setShowPopupDetalles(false)} />
+                <PopupDetallesUsuario selectedUser={selectedUser} onClose={() => setShowPopupDetalles(false)} />
             )}
         </div>
     );

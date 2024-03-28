@@ -1,9 +1,9 @@
+import AllCitas from "@/components/AgendarCita/admin/AllCitas";
+import CitaForm from "@/components/AgendarCita/CitaForm";
+import { UserRole } from "@/helpers/constants/UserRole";
+import UserContext from "@/helpers/context/UserPrivider";
 import { useContext } from "react";
 
-import CitaForm from "../components/AgendarCita/CitaForm";
-import AllCitas from "../components/AgendarCita/admin/AllCitas";
-import UserContext from "../helpers/context/UserPrivider";
-import { UserRole } from "../helpers/constants/UserRole";
 
 
 function AgendarCita() {

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Button, Modal } from "flowbite-react";
-import '../../../index.css';
-import PopupVerHistorial from "./PopupVerHistorial";
+import { Usuario } from "@/helpers/models/User";
+import { Modal, Button } from "flowbite-react";
+import { useState } from "react";
 import PopupAgregarHistorial from "./PopupAgregarHistorial";
-import { Usuario } from "../../../models/User";
+import PopupVerHistorial from "./PopupVerHistorial";
+
 
 interface PorpsPopup {
     selectedUser: Usuario;

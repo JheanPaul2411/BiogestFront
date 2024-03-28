@@ -1,27 +1,14 @@
-import { useLocation } from "react-router-dom";
-import {
-  Avatar,
-  Dropdown,
-  DropdownDivider,
-  DropdownHeader,
-  DropdownItem,
-  DarkThemeToggle,
-  Flowbite,
-  Navbar,
-  NavbarBrand,
-  NavbarCollapse,
-  NavbarLink,
-  NavbarToggle,
-} from "flowbite-react";
+import { UserRole } from "@/helpers/constants/UserRole";
+import { useAuth } from "@/helpers/context/AuthProvider";
+import UserContext from "@/helpers/context/UserPrivider";
+import { getUserByToken } from "@/helpers/handlers/GetUserById";
+import { handleLogout } from "@/helpers/handlers/HandleLogout";
+import validateToken from "@/helpers/handlers/ValidateToken";
+import { Flowbite, Navbar, NavbarBrand, DarkThemeToggle, Dropdown, Avatar, DropdownHeader, DropdownItem, DropdownDivider, NavbarToggle, NavbarCollapse, NavbarLink } from "flowbite-react";
 import { useContext, useEffect } from "react";
-
+import { useLocation } from "react-router-dom";
 import NavItemsByRole from "./NavItems";
-import { UserRole } from "../../helpers/constants/UserRole";
-import { useAuth } from "../../helpers/context/AuthProvider";
-import UserContext from "../../helpers/context/UserPrivider";
-import { getUserByToken } from "../../helpers/handlers/GetUserById";
-import { handleLogout } from "../../helpers/handlers/HandleLogout";
-import validateToken from "../../helpers/handlers/ValidateToken";
+
 
 function NavBar() {
   const { pathname } = useLocation();

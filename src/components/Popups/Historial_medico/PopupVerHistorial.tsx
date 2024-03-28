@@ -1,10 +1,9 @@
-import React, {  } from "react";
+import HistorialTable from "@/components/Common/HistorialTable";
+import { columnsHistorial } from "@/helpers/constants/table_columns/HistorialMTable";
+import useHistorial from "@/helpers/hooks/useHistorial";
+import { Usuario } from "@/helpers/models/User";
 import { Modal } from "flowbite-react";
-import '../../../index.css';
-import HistorialTable from "../../Common/HistorialTable";
-import { columnsHistorial } from "../../../helpers/constants/table_columns/HistorialMTable";
-import useHistorial from "../../../helpers/hooks/useHistorial";
-import { Usuario } from "../../../helpers/models/User";
+
 
 
 interface PropsPopupEditarCita {

@@ -1,12 +1,13 @@
-import { Route, Routes } from "react-router-dom";
-import NavBar from "./components/Nav/Header";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+
+import { Routes, Route } from 'react-router-dom';
+import NavBar from './components/Nav/Header';
 import './index.css';
-import CitaPage from "./pages/CitaPage";
-import PageHistorialMedico from "./pages/PageHistorialMedico";
-import Usuarios from "./pages/Usuarios";
+import CitaPage from './pages/CitaPage';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import PageHistorialMedico from './pages/PageHistorialMedico';
+import Register from './pages/Register';
+import Usuarios from './pages/Usuarios';
 
 
 function App() {

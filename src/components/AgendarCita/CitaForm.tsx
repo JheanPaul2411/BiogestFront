@@ -1,10 +1,8 @@
-import { useContext, useState } from 'react';
-import './Cita.css'
-import React from 'react';
+import UserContext from "@/helpers/context/UserPrivider";
+import { agendarCita } from "@/helpers/handlers/HandlerAgendarCita";
+import { Label, Textarea, TextInput, Button } from "flowbite-react";
+import { useState, useContext } from "react";
 
-import { Button, Label, TextInput, Textarea } from 'flowbite-react';
-import UserContext from '../../helpers/context/UserPrivider';
-import { agendarCita } from '../../helpers/handlers/HandlerAgendarCita';
 
 const CitaForm: React.FC = () => {
 
