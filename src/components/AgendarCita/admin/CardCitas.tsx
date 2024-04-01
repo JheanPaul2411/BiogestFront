@@ -7,6 +7,8 @@ import { Cita } from "@/helpers/models/Cita";
 import axios from "axios";
 import { Button } from "flowbite-react";
 import { useState, useEffect } from "react";
+import { parseDate } from "@/helpers/handlers/ParseDate";
+import './CardCitas.css'
 
 
 

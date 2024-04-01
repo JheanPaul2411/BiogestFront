@@ -10,15 +10,22 @@ interface Props {
   onClose: () => void;
 }
 
-export default function ConfirmarCambioRol({ selectedUser, newRole, onClose }: Props) {
+export default function ConfirmarCambioRol({
+  selectedUser,
+  newRole,
+  onClose,
+}: Props) {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<JSX.Element | null>(null);
 
   const handleClick = async () => {
     setLoading(true);
-    const resultElement = await UpdateUserData({ selectedUser, data: { rol: newRole } });
-    setResult(resultElement);
+    await UpdateUserData({
+      selectedUser,
+      data: { rol: newRole },
+    });
     setLoading(false);
+    alert(`Has cambiado el rol de ${selectedUser.nombre} ${selectedUser.apellido} a ${newRole}.`);
+    window.location.reload();
   };
 
   return (
@@ -46,7 +53,6 @@ export default function ConfirmarCambioRol({ selectedUser, newRole, onClose }: P
           </div>
         </Modal.Body>
       </Modal>
-      {result}
     </>
   );
 }
