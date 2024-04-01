@@ -3,6 +3,7 @@ import { ColumnSort, useReactTable, getPaginationRowModel, getCoreRowModel, getS
 import { TextInput, Avatar, Button } from "flowbite-react";
 import { useState, useEffect } from "react";
 import PopupDetallesUsuario from "../Popups/Usuarios/PopupDetalles";
+import PopupDetallesTabla from "../Popups/Historial_medico/PopupDetalles";
 
 
 interface Props {
@@ -114,7 +115,7 @@ export default function UsersTable({ data, columns, filterPlaceholder }: Props) 
 
             </div>
             {showPopupDetalles && selectedUser && (
-                <PopupDetallesUsuario selectedUser={selectedUser} onClose={() => setShowPopupDetalles(false)} />
+                <PopupDetallesTabla selectedUser={selectedUser} onClose={() => setShowPopupDetalles(false)} />
             )}
         </div>
     );
