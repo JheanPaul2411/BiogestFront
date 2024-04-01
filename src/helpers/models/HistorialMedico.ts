@@ -1,8 +1,10 @@
-import { User } from "../components/AgendarCita/dto/Login.dto";
+import { Usuario } from "./User";
 
 export interface HistorialMedico {
-    id:number;
-    peso?: number;
+    id: number;
+    paciente?: Usuario;
+    pacienteId?: number;
+    peso?: number ;
     altura?: number;
     presionArterial?: string;
     temperatura?: number;
@@ -12,11 +14,8 @@ export interface HistorialMedico {
     antecedentesFamiliares?: string;
     antecedentesPersonales?: string;
     fecha?: Date;
-    hora?: Date;
-    paciente:User;
     observaciones?: string;
     diagnostico?: string;
     tratamiento?: string;
     proximaCita?: Date;
-    proximaCitaHora?: Date;
-}
+  }
