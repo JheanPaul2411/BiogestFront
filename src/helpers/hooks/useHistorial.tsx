@@ -16,18 +16,21 @@ export default function useHistorial({ id }: Props) {
     async function fetchHistorial() {
       try {
         // {Si como argumento recibe in id, realiza la consulta a la ficha médica relacionada con el id}
-        if (id!==undefined) {
-          const response = await axios.get(`${baseUrl}/ficha-medica/${id}`, {
-            headers: headerBearer(),
-          });
-          if (response) setHistorialMedico(response.data);
+        if (id !== undefined) {
+          const response = await axios.get(
+            `${baseUrl}/ficha-medica/user/${id}`,
+            {
+              headers: headerBearer(),
+            }
+          );
 
-        // {Si NO recibe como argumento id, obtiene todas las fichas medicas}
+          setHistorialMedico(response.data);
+          // {Si NO recibe como argumento id, obtiene todas las fichas medicas}
         } else {
           const response = await axios.get(`${baseUrl}/ficha-medica`, {
             headers: headerBearer(),
           });
-          if (response) setHistorialMedico(response.data);
+          setHistorialMedico(response.data);
         }
       } catch (error) {
         handleErrors(error);
@@ -35,7 +38,7 @@ export default function useHistorial({ id }: Props) {
     }
 
     fetchHistorial();
-  }, []);
+  }, [setHistorialMedico]);
 
   return { historialMedico };
 }

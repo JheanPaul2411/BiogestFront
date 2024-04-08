@@ -1,9 +1,11 @@
 import { Usuario } from "@/helpers/models/User";
 import { Modal, Button } from "flowbite-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PopupAgregarHistorial from "./PopupAgregarHistorial";
 import PopupVerHistorial from "./PopupVerHistorial";
 import PopupDetallesUsuario from "../Usuarios/PopupDetalles";
+import UserContext from "@/helpers/context/UserPrivider";
+import { UserRole } from "@/helpers/constants/UserRole";
 
 interface PorpsPopup {
   selectedUser: Usuario;
@@ -18,6 +20,7 @@ const PopupDetallesTabla: React.FC<PorpsPopup> = ({
   const [showPopupAgregarHistorial, setShowPopupAgregarHistorial] =
     useState(false);
   const [showChangeRolePopup, setshowChangeRolePopup] = useState(false);
+  const { user } = useContext(UserContext);
 
   function handleShowHistorial() {
     setshowPopupTabla(true);
@@ -48,9 +51,12 @@ const PopupDetallesTabla: React.FC<PorpsPopup> = ({
           <Button color="indigo" onClick={handleAgregarHistorial}>
             Agregar ficha médica
           </Button>
-          <Button color="indigo" onClick={handleShowRolePopup}>
-            Cambiar rol
-          </Button>
+          {user?.rol === UserRole.ADMIN && (
+            <Button color="indigo" onClick={handleShowRolePopup}>
+              Cambiar rol
+              {user.rol}
+            </Button>
+          )}
         </div>
       </Modal.Body>
       {showPopupTabla && selectedUser && (

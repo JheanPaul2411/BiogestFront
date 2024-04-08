@@ -1,101 +1,158 @@
-import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, getFilteredRowModel, ColumnHelper, getPaginationRowModel } from '@tanstack/react-table';
-import { useState } from 'react';
-import { Button, TextInput } from 'flowbite-react';
-import { HistorialMedico } from '@/helpers/models/HistorialMedico';
+import {
+  ColumnSort,
+  useReactTable,
+  getPaginationRowModel,
+  getCoreRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  flexRender,
+} from "@tanstack/react-table";
+import { TextInput, Button } from "flowbite-react";
+import { useState, useEffect } from "react";
+import { HistorialMedico } from "@/helpers/models/HistorialMedico";
 
 interface Props {
-    data: HistorialMedico[],
+  data: HistorialMedico[];
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  columns: ColumnHelper[];
+  filterPlaceholder: string;
+}
+export default function HistorialTable({
+  data,
+  columns,
+  filterPlaceholder,
+}: Props) {
+  const [sorting, setSorting] = useState<ColumnSort[]>([]);
+  const [globalFilter, setGlobalFilter] = useState("");
+
+  useEffect(() => {}, [data]);
+
+  const table = useReactTable({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    columns: ColumnHelper[],
-    filterPlaceholder: string
-}
-function HistorialTable({ data, columns, filterPlaceholder }: Props) {
-    const [sorting, setSorting] = useState<ColumnSort[]>([]);
-    const [globalFilter, setGlobalFilter] = useState('');
+    data,
+    columns,
+    getPaginationRowModel: getPaginationRowModel(),
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      sorting,
+      globalFilter,
+    },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setGlobalFilter,
+  });
 
-
-    const table = useReactTable({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        data,
-        columns,
-        getPaginationRowModel: getPaginationRowModel(),
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        state: {
-            sorting,
-            globalFilter,
-        },
-        onSortingChange: setSorting,
-        onGlobalFilterChange: setGlobalFilter,
-    });
-
-    return (
+  return (
+    <>
+      <main>
         <div className="my-5">
-            <TextInput placeholder={filterPlaceholder} onChange={e => setGlobalFilter(e.target.value)} value={globalFilter} />
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 my-5">
-                <thead className="bg-gray-100 dark:bg-gray-700">
-                    {table.getHeaderGroups().map(headerGroup => (
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
-                        <tr key={data.id}>
-                            {headerGroup.headers.map(header => {
-                                return (
-                                    <th
-                                        key={header.id}
-                                        scope="col"
-                                        onClick={header.column.getToggleSortingHandler()}
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
-                                    >
-                                        {flexRender(header.column.columnDef.header, header.getContext())}
-                                        {header.column.getIsSorted() ? (
-                                            header.column.getIsSorted() === 'asc' ? '🔼' : '🔽'
-                                        ) : null}
-                                    </th>
-                                );
-                            })}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-700 dark:divide-gray-700">
-                    {table.getRowModel().rows.map(row => (
-                        <tr key={row.id} className='dark:hover:bg-gray-600 hover:bg-gray-300'>
+          <TextInput
+            placeholder={filterPlaceholder}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            value={globalFilter}
+          />
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 my-5">
+            <thead className="bg-gray-100 dark:bg-gray-700">
+              {table.getHeaderGroups().map((headerGroup) => (
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                <tr key={data.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <th
+                        key={header.id}
+                        scope="col"
+                        onClick={header.column.getToggleSortingHandler()}
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {header.column.getIsSorted()
+                          ? header.column.getIsSorted() === "asc"
+                            ? "🔼"
+                            : "🔽"
+                          : null}
+                      </th>
+                    );
+                  })}
+                </tr>
+              ))}
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-700 dark:divide-gray-700">
+              {table.getRowModel().rows.map((row) => (
+                <tr
+                  key={row.id}
+                  className="dark:hover:bg-gray-600 hover:bg-gray-300"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
+                    >
+                      <div className="flex items-center justify-start gap-5">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-                            {row.getVisibleCells().map(cell => (
-                                <td
-                                    key={cell.id}
-                                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
-                                >
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            <div className="flex justify-between items-center">
-                <div className="paginacion flex gap-2 my-3">
-                    <Button color='gray' onClick={() => table.setPageIndex(0)} disabled={table.getState().pagination.pageIndex === 0}>Primera página</Button>
-                    <Button color='gray' onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Página anterior</Button>
-                    <Button color='gray' onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Página siguiente</Button>
-                    <Button color='gray' onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={table.getState().pagination.pageIndex === table.getPageCount() - 1}>Última página</Button>
-                </div>
-                <div>
-                    <span>
-                        Página{' '}
-                        <strong>
-                            {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
-                        </strong>{' '}
-                    </span>
-                </div>
-
+          <div className="flex justify-between items-center">
+            <div className="paginacion flex gap-2 my-3">
+              <Button
+                color="gray"
+                onClick={() => table.setPageIndex(0)}
+                disabled={table.getState().pagination.pageIndex === 0}
+              >
+                Primera página
+              </Button>
+              <Button
+                color="gray"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                Página anterior
+              </Button>
+              <Button
+                color="gray"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                Página siguiente
+              </Button>
+              <Button
+                color="gray"
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                disabled={
+                  table.getState().pagination.pageIndex ===
+                  table.getPageCount() - 1
+                }
+              >
+                Última página
+              </Button>
             </div>
-           
+            <div>
+              <span>
+                Página{" "}
+                <strong>
+                  {table.getState().pagination.pageIndex + 1} de{" "}
+                  {table.getPageCount()}
+                </strong>{" "}
+              </span>
+            </div>
+          </div>
         </div>
-    );
+      </main>
+    </>
+  );
 }
-
-export default HistorialTable;
