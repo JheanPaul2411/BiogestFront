@@ -105,6 +105,7 @@ function NavBar() {
         {/* {Modifica los items de la barra de navegación y las rutas segun el rol del usuario} */}
         {isLoggedIn ? (
           <>
+
             <NavItemsByRole role={user?.rol!} />
           </>
         ) : (

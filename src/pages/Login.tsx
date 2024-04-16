@@ -1,37 +1,29 @@
-
-import { ApiResponse } from "@/components/AgendarCita/dto/Login.dto";
-import { useAuth } from "@/helpers/context/AuthProvider";
-import { handleErrors } from "@/helpers/handlers/HandleErrors";
-import { loginUser } from "@/helpers/handlers/HandlerLogin";
-import { TextInput, Button } from "flowbite-react";
-import { useState } from "react";
+import { FloatingLabel, Label, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import "./css/Login.css";
-
+import { useForm } from "react-hook-form";
+import { LoginCredentials, loginUser } from "@/helpers/handlers/HandlerLogin";
+import toast from "react-hot-toast";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { login } = useAuth(); // Importa solo la función de login del contexto de autenticación
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginCredentials>();
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
-    event
-  ) => {
-    event.preventDefault();
-    try {
-      const data: ApiResponse = await loginUser({ email, password });
-      if (data) {
-        login(); // Aquí llamamos a la función login para cambiar el estado de logueo a true
-        alert(
-          `Te has logueado correctamente, ${data.user.nombre} ${data.user.apellido}`
-        );
-        window.location.href = "/";
-      }
-    } catch (error) {
-      handleErrors(error);
+  const submit = handleSubmit(async (values) => {
+    const response = await loginUser({
+      email: values.email,
+      password: values.password,
+    });
+    if (response) {
+      toast.success("Has iniciado sesión correctamente");
     }
-  };
-
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
+  });
   return (
     <section id="container_login">
       <section
@@ -44,23 +36,69 @@ function Login() {
         <span>Inicia sesión para acceder a todas nuestras funcionalidades</span>
       </section>
 
-      <form id="form_login" onSubmit={handleSubmit}>
-        <TextInput
-          type="text"
-          value={email}
-          placeholder="Correo electrónico"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextInput
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+      <form
+        id="form_login"
+        onSubmit={submit}
+        className="w-full bg-gray-200 dark:bg-gray-800"
+      >
+        {/* EMAIL */}
+        <div className="lg:col-span-2">
+          <FloatingLabel
+            label={"Correo electrónico"}
+            variant={"standard"}
+            {...register("email", {
+              required: {
+                value: true,
+                message: "Debes llenar este campo",
+              },
+              pattern: {
+                value: /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
+                message: "Debes colocar un correo electrónico válido",
+              },
+            })}
+          />
+          <Label
+            className="text-red-500 dark:text-red-500 font-normal text-xs"
+            hidden={!errors.email}
+          >
+            {errors.email?.message}
+          </Label>
+        </div>
 
-        <Button type="submit">Iniciar sesión</Button>
+        {/* PASSWORD */}
+        <div className="lg:col-span-2">
+          <FloatingLabel
+            type="password"
+            label={"contraseña"}
+            variant={"standard"}
+            {...register("password", {
+              required: {
+                value: true,
+                message: "Debes llenar este campo",
+              },
+              minLength: {
+                value: 8,
+                message: "La contraseña debe ser de al menos 8 caracteres",
+              },
+              maxLength: {
+                value: 16,
+                message: "La contraseña debe ser de máximo 16 caracteres",
+              },
+            })}
+          />
+          <Label
+            className="text-red-500 dark:text-red-500 font-normal text-xs"
+            hidden={!errors.password}
+          >
+            {errors.password?.message}
+          </Label>
+        </div>
 
-        <a href="" className="text-gray-300 text-center">
+        <Button type="submit" className="lg:col-span-2">
+          Iniciar sesión
+        </Button>
+
+        <a className="dark:text-gray-300 text-gray-800 text-center lg:col-span-2">
           ¿Aún no tienes una cuenta?{" "}
           <Link to={"/register"} className="font-bold text-blue-500">
             Registrate

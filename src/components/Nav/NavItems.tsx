@@ -20,7 +20,7 @@ export default function NavItemsByRole({ role }: Props) {
             href="/agendar_cita"
             active={pathname === "/agendar_cita"}
           >
-            Agendar Cita
+            Citas pendientes
           </NavbarLink>
           <NavbarLink href="/usuarios" active={pathname === "/usuarios"}>
             Usuarios

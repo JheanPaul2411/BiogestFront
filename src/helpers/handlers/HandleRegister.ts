@@ -1,7 +1,7 @@
 import axios from "axios";
-import { ApiResponse, User } from "../components/AgendarCita/dto/Login.dto";
 import { baseUrl } from "../constants/BaseURL";
 import { handleErrors } from "./HandleErrors";
+import { User, ApiResponse } from "@/components/AgendarCita/dto/Login.dto";
 
 
 export async function registerUser(credentials: User): Promise<ApiResponse> {

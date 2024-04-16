@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 export function handleErrors(error: unknown) {
@@ -6,10 +7,10 @@ export function handleErrors(error: unknown) {
     if (axios.isAxiosError(error)) {
 
         if (error.response?.status === 403) {
-            alert('No tienes permiso para acceder a este recurso');
+            toast.error('No tienes permiso para acceder a este recurso');
             return;
         }
-        alert(error.response?.data.message);
+        toast.error(error.response?.data.message);
 
 
     } else {

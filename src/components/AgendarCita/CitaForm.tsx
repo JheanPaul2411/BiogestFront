@@ -2,6 +2,7 @@ import UserContext from "@/helpers/context/UserPrivider";
 import { agendarCita } from "@/helpers/handlers/HandlerAgendarCita";
 import { Label, Textarea, TextInput, Button } from "flowbite-react";
 import { useState, useContext } from "react";
+import toast from "react-hot-toast";
 
 
 const CitaForm: React.FC = () => {
@@ -25,7 +26,7 @@ const CitaForm: React.FC = () => {
     setFecha('');
     setHora('');
     console.log(response)
-    alert("Has solicitado la cita correctamente");
+    toast.success("Has solicitado la cita correctamente");
 
 
   };

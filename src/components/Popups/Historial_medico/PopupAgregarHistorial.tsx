@@ -4,6 +4,7 @@ import { HistorialMedico } from "@/helpers/models/HistorialMedico";
 import { Usuario } from "@/helpers/models/User";
 import { Modal, Label, TextInput, Textarea, Button } from "flowbite-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface PropsPopupEditarCita {
   selectedUser: Usuario;
@@ -29,7 +30,7 @@ const PopupAgregarHistorial: React.FC<PropsPopupEditarCita> = ({
         },
       });
 
-      alert(
+      toast.success(
         `Se ha registrado una nueva ficha médica al paciente ${selectedUser.nombre} ${selectedUser.apellido}`
       );
     } catch (error) {

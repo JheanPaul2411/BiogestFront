@@ -3,6 +3,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useState } from "react";
 import UpdateUserData from "@/helpers/handlers/UpdateUserData";
 import { Usuario } from "@/helpers/models/User";
+import toast from "react-hot-toast";
 
 interface Props {
   selectedUser: Usuario;
@@ -24,7 +25,7 @@ export default function ConfirmarCambioRol({
       data: { rol: newRole },
     });
     setLoading(false);
-    alert(`Has cambiado el rol de ${selectedUser.nombre} ${selectedUser.apellido} a ${newRole}.`);
+    toast.success(`Has cambiado el rol de ${selectedUser.nombre} ${selectedUser.apellido} a ${newRole}.`);
     window.location.reload();
   };
 

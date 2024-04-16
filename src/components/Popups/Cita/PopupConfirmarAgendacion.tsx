@@ -5,6 +5,7 @@ import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
 import axios, { AxiosResponse } from "axios";
 import { Modal, Button } from "flowbite-react";
+import toast from "react-hot-toast";
 
 
 interface Props {
@@ -24,7 +25,7 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
             }, {headers:headerBearer()});
     
             if(response){
-                alert("Has confirmado esta cita")
+                toast.success("Has confirmado esta cita")
                 onClose()
             }
         } catch (error) {

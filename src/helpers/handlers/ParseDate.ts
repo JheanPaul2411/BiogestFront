@@ -1,6 +1,6 @@
 import { fechaConfig } from "../constants/FechaConfig";
 
-export function parseDate(date: Date|string|undefined){
+export function parseDate(date: Date|string|undefined|unknown){
     if(date===undefined){
         return
     }

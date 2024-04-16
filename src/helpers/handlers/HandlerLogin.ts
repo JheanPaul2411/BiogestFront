@@ -1,8 +1,9 @@
 import axios from "axios";
 import validateToken from "./ValidateToken";
-import { ApiResponse } from "../components/AgendarCita/dto/Login.dto";
+import { ApiResponse } from "@/components/AgendarCita/dto/Login.dto";
+import { handleErrors } from "./HandleErrors";
 
-interface LoginCredentials {
+export interface LoginCredentials {
     email: string;
     password: string;
 }
@@ -13,7 +14,7 @@ export async function loginUser(credentials: LoginCredentials): Promise<ApiRespo
         const apiUrl = `${baseUrl}/auth/login`;
         const body = {
             email: credentials.email!,
-            password: credentials.password || "", // Asignar una cadena vacía si password es undefined
+            password: credentials.password,
         };
         
         const response = await axios.post(apiUrl, body);
@@ -27,7 +28,7 @@ export async function loginUser(credentials: LoginCredentials): Promise<ApiRespo
         
         return response.data;
     } catch (error) {
-        console.log(error);
+        handleErrors(error)
         throw error;
     }
 }

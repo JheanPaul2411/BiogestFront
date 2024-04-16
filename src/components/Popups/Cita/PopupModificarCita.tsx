@@ -6,6 +6,7 @@ import { Cita } from "@/helpers/models/Cita";
 import axios from "axios";
 import { Modal, TextInput, Button } from "flowbite-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 
 
@@ -35,7 +36,7 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
             );
             onReagendar(updatedCita); // Llamar a la función onReagendar con la cita actualizada
             onClose();
-            alert("Se ha actualizado la fecha de la cita.");
+            toast.success("Se ha actualizado la fecha de la cita.");
             window.location.reload();
         } catch (error) {
             handleErrors(error)

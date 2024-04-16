@@ -9,6 +9,7 @@ import { Button } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { parseDate } from "@/helpers/handlers/ParseDate";
 import './CardCitas.css'
+import toast from "react-hot-toast";
 
 
 
@@ -71,7 +72,7 @@ function CardCitas({ citas }: Props) {
             setCitasActualizadas(citasActualizadas);
             setShowReagendarModal(false);
         } else {
-            alert("Hubo un error al reagendar la cita. Por favor, intenta de nuevo más tarde.");
+            toast.error("Hubo un error al reagendar la cita. Por favor, intenta de nuevo más tarde.");
         }
     };
 

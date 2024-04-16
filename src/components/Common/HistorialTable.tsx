@@ -48,13 +48,13 @@ export default function HistorialTable({
   return (
     <>
       <main>
-        <div className="my-5">
+        <div className="my-5 overflow-x-auto">
           <TextInput
             placeholder={filterPlaceholder}
             onChange={(e) => setGlobalFilter(e.target.value)}
             value={globalFilter}
           />
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 my-5">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 my-5 ">
             <thead className="bg-gray-100 dark:bg-gray-700">
               {table.getHeaderGroups().map((headerGroup) => (
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

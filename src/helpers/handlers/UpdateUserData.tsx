@@ -1,4 +1,3 @@
-import ToastAlert from "@/components/Common/Alert";
 import axios from "axios";
 import { baseUrl } from "@/helpers/constants/BaseURL";
 import { headerBearer } from "@/helpers/constants/Headers";
@@ -12,15 +11,13 @@ interface Props {
   data: Partial<Usuario>;
 }
 
-const UpdateUserData = async ({ selectedUser, data }: Props): Promise<JSX.Element> => {
+const UpdateUserData = async ({ selectedUser, data }: Props)=> {
   try {
     await axios.put(`${baseUrl}/usuarios/${selectedUser.id}`, data, {
       headers: headerBearer(),
     });
-    return <ToastAlert message="Rol cambiado correctamente" />;
   } catch (error) {
     handleErrors(error);
-    return <ToastAlert message="Error al cambiar el rol" />;
   }
 };
 
