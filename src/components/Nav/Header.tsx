@@ -106,7 +106,7 @@ function NavBar() {
         {isLoggedIn ? (
           <>
 
-            <NavItemsByRole role={user?.rol!} />
+            <NavItemsByRole role={user?.rol} />
           </>
         ) : (
           <>

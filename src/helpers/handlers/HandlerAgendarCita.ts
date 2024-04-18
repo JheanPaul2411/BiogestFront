@@ -1,7 +1,8 @@
 import axios from "axios";
 import { baseUrl } from "../constants/BaseURL";
-import { Cita } from "../components/AgendarCita/dto/Cita.dto";
 import { headerBearer } from "../constants/Headers";
+import { Cita } from "../models/Cita";
+import { handleErrors } from "./HandleErrors";
 
 
 export async function agendarCita(citaDto: Cita) {
@@ -21,7 +22,7 @@ export async function agendarCita(citaDto: Cita) {
         return response;
     } catch (error) {
         // Manejo de error en caso de que la solicitud falle
-        console.error('Error al enviar la cita:', error);
+        handleErrors(error)
         throw error; // Lanzar el error para que el código que llama pueda manejarlo
     }
 }

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 
 interface Props {
-  role: string;
+  role: string|undefined;
 }
 
 export default function NavItemsByRole({ role }: Props) {
@@ -56,6 +56,14 @@ export default function NavItemsByRole({ role }: Props) {
           >
             Agendar Cita
           </NavbarLink>
+
+          <NavbarLink
+            href="/mis_citas"
+            active={pathname === "/mis_citas"}
+          >
+            Mis citas
+          </NavbarLink>
+
           <NavbarLink
             href="/historial_medico"
             active={pathname === "/historial_medico"}

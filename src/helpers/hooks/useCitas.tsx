@@ -4,24 +4,56 @@ import { baseUrl } from "../constants/BaseURL";
 import { headerBearer } from "../constants/Headers";
 import { Cita } from "../models/Cita";
 
-
 export default function useCitas() {
-    const [citas, setcitas] = useState<Cita[]>([]);
-    useEffect(()=>{
-        async function fetchCitas() {
-            try {
-                const response: AxiosResponse<Cita[]> = await axios.get(`${baseUrl}/cita`,{
-                    headers: headerBearer()
-                });
-                if (response) {
-                    setcitas(response.data);
-                }
-            } catch (error) {
-                console.error(error)
-            }
+  const [citas, setcitas] = useState<Cita[]>([]);
+  useEffect(() => {
+    async function fetchCitas() {
+      try {
+        const response: AxiosResponse<Cita[]> = await axios.get(
+          `${baseUrl}/cita`,
+          {
+            headers: headerBearer(),
+          }
+        );
+        if (response) {
+          setcitas(response.data);
         }
-        
-        fetchCitas()
-    },[setcitas]);
-    return {citas}
-};
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchCitas();
+  }, [setcitas]);
+  return { citas };
+}
+interface Props {
+  id: number;
+  aceptada?:boolean;
+}
+
+export function useCitasByPaciente({ id, aceptada}: Props) {
+  const [citas, setcitas] = useState<Cita[]>([]);
+  useEffect(() => {
+    async function fetchCitas() {
+      try {
+        const response: AxiosResponse<Cita[]> = await axios.get(
+          `${baseUrl}/cita/paciente/${id}?aceptada=${aceptada}`,
+          {
+            headers: headerBearer(),
+          }
+        );
+        if (response) {
+          setcitas(response.data);
+          console.log(response.data)
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchCitas();
+  }, [aceptada, id, setcitas]);
+
+  return { citas };
+}

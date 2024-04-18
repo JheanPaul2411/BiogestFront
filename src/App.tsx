@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import PageHistorialMedico from './pages/PageHistorialMedico';
 import Register from './pages/Register';
 import Usuarios from './pages/Usuarios';
+import MisCitas from './pages/MisCitas';
 
 
 function App() {
@@ -21,10 +22,13 @@ function App() {
               <Route path="/agendar_cita" element={<CitaPage/>}></Route>
 
               <Route path="/historial_medico" element={<PageHistorialMedico/>}></Route>
+              <Route path="/mis_citas" element={<MisCitas/>}></Route>
+
 
               <Route path="/usuarios" element={<Usuarios/>}></Route>
 
               <Route path="/pacientes" element={<Usuarios/>}></Route>
+
 
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
