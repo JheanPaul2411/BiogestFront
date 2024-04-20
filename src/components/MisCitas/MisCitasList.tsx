@@ -6,7 +6,7 @@ interface Props {
   citas: Cita[];
 }
 
-export default function MisCitasList({ citas }: Props) {
+export default function MisCitasList({ citas}: Props) {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
       {citas.map((cita, i) => (

@@ -8,7 +8,7 @@ import { useContext, useState, useEffect } from "react";
 export default function MisCitas() {
     const { user } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(true);
-    const { citas } = useCitasByPaciente({ id: user?.id || 0, aceptada:true}); // Utiliza el operador de encadenamiento opcional ?.
+    const { citas } = useCitasByPaciente({ id: user?.id}); // Utiliza el operador de encadenamiento opcional ?.
     
   useEffect(() => {
       if (user) {

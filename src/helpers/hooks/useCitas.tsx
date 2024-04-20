@@ -29,23 +29,25 @@ export default function useCitas() {
 }
 interface Props {
   id: number;
-  aceptada?:boolean;
+  aceptada?: boolean;
 }
 
-export function useCitasByPaciente({ id, aceptada}: Props) {
+export function useCitasByPaciente({ id, aceptada }: Props) {
   const [citas, setcitas] = useState<Cita[]>([]);
+
   useEffect(() => {
     async function fetchCitas() {
       try {
-        const response: AxiosResponse<Cita[]> = await axios.get(
-          `${baseUrl}/cita/paciente/${id}?aceptada=${aceptada}`,
-          {
-            headers: headerBearer(),
-          }
-        );
+        const url = `${baseUrl}/cita/paciente/${id}`;
+        const params = aceptada !== undefined ? { params: { aceptada } } : {};
+        const response: AxiosResponse<Cita[]> = await axios.get(url, {
+          headers: headerBearer(),
+          ...params,
+        });
+
         if (response) {
           setcitas(response.data);
-          console.log(response.data)
+          console.log(response.data);
         }
       } catch (error) {
         console.error(error);
