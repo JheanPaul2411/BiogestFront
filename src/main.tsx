@@ -16,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <UserProvider>
           <App />
           <Toaster />
+          
         </UserProvider>
         
       </AuthProvider>

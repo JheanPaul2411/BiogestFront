@@ -2,9 +2,8 @@ import { UserRole } from "@/helpers/constants/UserRole";
 import { NavbarCollapse, NavbarLink } from "flowbite-react";
 import { useLocation } from "react-router-dom";
 
-
 interface Props {
-  role: string|undefined;
+  role: string | undefined;
 }
 
 export default function NavItemsByRole({ role }: Props) {
@@ -21,6 +20,9 @@ export default function NavItemsByRole({ role }: Props) {
             active={pathname === "/agendar_cita"}
           >
             Citas pendientes
+          </NavbarLink>
+          <NavbarLink href="/agenda" active={pathname === "/agenda"}>
+            Agenda
           </NavbarLink>
           <NavbarLink href="/usuarios" active={pathname === "/usuarios"}>
             Usuarios
@@ -55,13 +57,6 @@ export default function NavItemsByRole({ role }: Props) {
             active={pathname === "/agendar_cita"}
           >
             Agendar Cita
-          </NavbarLink>
-
-          <NavbarLink
-            href="/mis_citas"
-            active={pathname === "/mis_citas"}
-          >
-            Mis citas
           </NavbarLink>
 
           <NavbarLink
