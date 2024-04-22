@@ -4,35 +4,39 @@ import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
-import { FloatingLabel, Spinner } from "flowbite-react";
+import { FloatingLabel, Spinner, Button } from "flowbite-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Agenda() {
-  const [fecha, setFecha] = useState<string>();
+  const [fecha, setFecha] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const citas = useQuery({
+  const { data, isError, isLoading: loadingData, refetch, error} = useQuery({
     queryKey: ["agenda", fecha],
     queryFn: async () => {
       const newFecha = fecha ? new Date(fecha) : new Date(Date.now());
-      console.log(newFecha)
       const response: AxiosResponse<Cita[]> = await axios.get(
         `${baseUrl}/cita/agenda?fecha=${newFecha}&aceptada=${true}`,
-        {
-          headers: headerBearer(),
-        }
+        { headers: headerBearer() }
       );
-
       return response;
     },
+    enabled: false, // Deshabilitamos la ejecución automática
   });
 
-  if (citas.isLoading) {
+  const handleFetchData = async () => {
+    setIsLoading(true);
+    await refetch();
+    setIsLoading(false);
+  };
+
+  if (isLoading || loadingData) {
     return <Spinner size={"xl"} />;
   }
 
-  if (citas.isError) {
-    toast.error(citas.error.message);
+  if (isError) {
+    toast.error(error.message || "Error al cargar los datos");
   }
 
   return (
@@ -45,8 +49,8 @@ export default function Agenda() {
         type="date"
         onChange={(e) => setFecha(e.target.value)}
       />
-
-      {citas.data?.data.map((cita, index) => {
+      <Button onClick={handleFetchData}>Buscar Citas</Button>
+      {data?.data.map((cita, index) => {
         return (
           <div key={index} className="bg-blue-400 p-5 rounded m-5">
             <p>{parseDate(cita.fecha)}</p>
