@@ -86,26 +86,50 @@ function CardCitas({ citas }: Props) {
 
   return (
     <>
-      <div className="flex justify-center gap-4 flex-wrap">
-        <Button color="gray" onClick={() => handleFiltrarAceptadas(true)}>
+      <div
+        className="flex justify-center gap-4 flex-wrap"
+        role="navigation"
+        aria-label="Filtros de citas"
+      >
+        <Button
+          color="gray"
+          onClick={() => handleFiltrarAceptadas(true)}
+          aria-label="Mostrar citas aceptadas"
+        >
           Mostrar Aceptadas
         </Button>
-        <Button color="gray" onClick={() => handleFiltrarAceptadas(false)}>
+        <Button
+          color="gray"
+          onClick={() => handleFiltrarAceptadas(false)}
+          aria-label="Mostrar citas pendientes"
+        >
           Mostrar Pendientes
         </Button>
-        <Button color="gray" onClick={() => handleFiltrarAceptadas(null)}>
+        <Button
+          color="gray"
+          onClick={() => handleFiltrarAceptadas(null)}
+          aria-label="Mostrar todas las citas"
+        >
           Mostrar Todas
         </Button>
       </div>
       <div
         className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 place-items-center mt-10"
         id="citas"
+        role="list"
+        aria-label="Lista de citas"
       >
         {citasFiltradas.map((cita) => (
           <div
             key={cita.id}
             className={`citas_contenedor ${
               cita.aceptada ? "bg-green-800/30 dark:bg-green-800/30" : ""
+            }`}
+            role="listitem"
+            aria-label={`Cita con ${
+              cita.paciente
+                ? `${cita.paciente.nombre} ${cita.paciente.apellido}`
+                : "Paciente sin asignar"
             }`}
           >
             <div className="datos col-span-1 w-full h-full">
@@ -144,10 +168,23 @@ function CardCitas({ citas }: Props) {
                 className="grow"
                 disabled={cita.aceptada}
                 onClick={() => handleConfirmarAgendacion(cita)}
+                aria-label={`Aprobar solicitud para ${
+                  cita.paciente
+                    ? `${cita.paciente.nombre} ${cita.paciente.apellido}`
+                    : "Paciente sin asignar"
+                }`}
               >
                 Aprobar solicitud
               </Button>
-              <Button onClick={() => handleReagendar(cita)} color="purple">
+              <Button
+                onClick={() => handleReagendar(cita)}
+                color="purple"
+                aria-label={`Reagendar cita para ${
+                  cita.paciente
+                    ? `${cita.paciente.nombre} ${cita.paciente.apellido}`
+                    : "Paciente sin asignar"
+                }`}
+              >
                 Reagendar
               </Button>
             </div>
@@ -159,6 +196,11 @@ function CardCitas({ citas }: Props) {
             selectedCita={selectedCita}
             onClose={() => setShowReagendarModal(false)}
             onReagendar={handleReagendamientoCita}
+            aria-label={`Reagendar cita para ${
+              selectedCita.paciente
+                ? `${selectedCita.paciente.nombre} ${selectedCita.paciente.apellido}`
+                : "Paciente sin asignar"
+            }`}
           />
         )}
 
@@ -166,6 +208,11 @@ function CardCitas({ citas }: Props) {
           <PopupConfirmarAgendacion
             selectedCita={selectedCita}
             onClose={() => setShowPopupConfirmarCita(false)}
+            aria-label={`Confirmar agendación de cita para ${
+              selectedCita.paciente
+                ? `${selectedCita.paciente.nombre} ${selectedCita.paciente.apellido}`
+                : "Paciente sin asignar"
+            }`}
           />
         )}
       </div>
