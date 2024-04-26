@@ -14,7 +14,7 @@ export default function Usuarios() {
   }
 
   return (
-    <main className="mt-10 min-w-screen min-h-[100%] flex flex-col items-center">
+    <main className="mt-10 min-w-screen min-h-[100%] flex flex-col items-center ">
     <UsersTable
         data={users}
         columns={columnsUser}

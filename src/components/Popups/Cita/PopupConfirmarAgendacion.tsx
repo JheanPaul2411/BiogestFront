@@ -15,7 +15,7 @@ interface Props {
 function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
   async function confirmarCita() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const {id, pacienteId, paciente, ...cita} = selectedCita
+    const { id, pacienteId, paciente, ...cita } = selectedCita;
     try {
       const response: AxiosResponse<Cita> = await axios.put(
         `${baseUrl}/cita/${selectedCita.id}`,
@@ -25,7 +25,6 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
         },
         { headers: headerBearer() }
       );
-
       if (response) {
         toast.success("Has confirmado esta cita");
         onClose();
@@ -37,18 +36,27 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
 
   if (new Date(selectedCita.fecha) < new Date(Date.now())) {
     return (
-      <Modal popup size={"md"} onClose={onClose} show={true}>
+      <Modal
+        popup
+        size={"md"}
+        onClose={onClose}
+        show={true}
+        aria-modal={"true"}
+
+        aria-label="Cita con fecha pasada"
+      >
         <Modal.Header />
         <Modal.Body>
           <h2 className="text-center">
             No puedes aceptar una cita cuya fecha ya pasó.
           </h2>
-
           <Button
+            role="button"
             className="btn_cancelar my-5"
             color="secondary"
             onClick={onClose}
             disabled={selectedCita.aceptada}
+            aria-label="Salir del modal"
           >
             Salir
           </Button>
@@ -58,7 +66,15 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
   }
 
   return (
-    <Modal popup size={"md"} onClose={onClose} show={true}>
+    <Modal
+      popup
+      aria-modal={"true"}
+
+      size={"md"}
+      onClose={onClose}
+      show={true}
+      aria-label={`Confirmar cita para ${parseDate(selectedCita.fecha)}`}
+    >
       <Modal.Header />
       <Modal.Body>
         <h2 className="text-center">
@@ -68,9 +84,14 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
           </span>
           ?
         </h2>
-
         <div className="flex gap-3 mt-5">
-          <Button className="grow" color="success" onClick={confirmarCita}>
+          <Button
+            className="grow"
+            color="success"
+            onClick={confirmarCita}
+            aria-label="Confirmar cita"
+            role="button"
+          >
             Confirmar
           </Button>
           <Button
@@ -78,6 +99,8 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
             color="secondary"
             onClick={onClose}
             disabled={selectedCita.aceptada}
+            aria-label="Cancelar confirmación"
+            role="button"
           >
             Cancelar
           </Button>

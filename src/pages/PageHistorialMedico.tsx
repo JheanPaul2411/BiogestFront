@@ -33,7 +33,6 @@ function PageHistorialMedico() {
           )}
         </>
       )}
-      {/* {user?.rol !== UserRole.PACIENTE && <Navigate to={"/"} />} */}
     </main>
   );
 }

@@ -25,13 +25,15 @@ export default function ConfirmarCambioRol({
       data: { rol: newRole },
     });
     setLoading(false);
-    toast.success(`Has cambiado el rol de ${selectedUser.nombre} ${selectedUser.apellido} a ${newRole}.`);
+    toast.success(
+      `Has cambiado el rol de ${selectedUser.nombre} ${selectedUser.apellido} a ${newRole}.`
+    );
     window.location.reload();
   };
 
   return (
     <>
-      <Modal show={true} size="xl" onClose={onClose} popup>
+      <Modal aria-modal={"true"} show={true} size="xl" onClose={onClose} popup>
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">

@@ -23,7 +23,14 @@ export default function PopupDetallesUsuario({
   };
 
   return (
-    <Modal onClose={onClose} size={"lg"} popup show={true} className="z-40">
+    <Modal
+      aria-modal={"true"}
+      onClose={onClose}
+      size={"lg"}
+      popup
+      show={true}
+      className="z-40"
+    >
       <Modal.Header />
       <Modal.Body className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">
@@ -59,7 +66,9 @@ export default function PopupDetallesUsuario({
           {newRole && (
             <p>
               Rol seleccionado{" "}
-              <Label className="text-blue-700 dark:text-blue-500">{newRole}</Label>{" "}
+              <Label className="text-blue-700 dark:text-blue-500">
+                {newRole}
+              </Label>{" "}
             </p>
           )}
           <Button color="indigo" onClick={() => setShowNewRolPopup(true)}>

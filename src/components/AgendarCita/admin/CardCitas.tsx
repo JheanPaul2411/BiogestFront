@@ -95,6 +95,7 @@ function CardCitas({ citas }: Props) {
           color="gray"
           onClick={() => handleFiltrarAceptadas(true)}
           aria-label="Mostrar citas aceptadas"
+          role="button"
         >
           Mostrar Aceptadas
         </Button>
@@ -102,6 +103,7 @@ function CardCitas({ citas }: Props) {
           color="gray"
           onClick={() => handleFiltrarAceptadas(false)}
           aria-label="Mostrar citas pendientes"
+          role="button"
         >
           Mostrar Pendientes
         </Button>
@@ -109,12 +111,13 @@ function CardCitas({ citas }: Props) {
           color="gray"
           onClick={() => handleFiltrarAceptadas(null)}
           aria-label="Mostrar todas las citas"
+          role="button"
         >
           Mostrar Todas
         </Button>
       </div>
       <div
-        className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 place-items-center mt-10"
+        className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10"
         id="citas"
         role="list"
         aria-label="Lista de citas"
@@ -162,7 +165,7 @@ function CardCitas({ citas }: Props) {
                 <p className="atributos">{isAproabda(cita.aceptada)}</p>
               </div>
             </div>
-            <div className="col-span-1 flex mt-6 gap-3">
+            <div className="col-span-1 flex mt-6 gap-3 flex-wrap">
               <Button
                 color="success"
                 className="grow"
@@ -173,6 +176,7 @@ function CardCitas({ citas }: Props) {
                     ? `${cita.paciente.nombre} ${cita.paciente.apellido}`
                     : "Paciente sin asignar"
                 }`}
+                role="button"
               >
                 Aprobar solicitud
               </Button>
@@ -184,6 +188,8 @@ function CardCitas({ citas }: Props) {
                     ? `${cita.paciente.nombre} ${cita.paciente.apellido}`
                     : "Paciente sin asignar"
                 }`}
+                role="button"
+                className="grow"
               >
                 Reagendar
               </Button>

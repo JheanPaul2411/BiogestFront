@@ -13,11 +13,17 @@ const PopupVerHistorial: React.FC<PropsPopupEditarCita> = ({
   selectedUser,
   onClose,
 }) => {
-
-  const {historialMedico} = useHistorial({id:selectedUser.id})
+  const { historialMedico } = useHistorial({ id: selectedUser.id });
 
   return (
-    <Modal onClose={onClose} size={"8xl"} popup show={true} className="z-50">
+    <Modal
+      aria-modal={"true"}
+      onClose={onClose}
+      size={"8xl"}
+      popup
+      show={true}
+      className="z-50"
+    >
       <Modal.Header />
       <Modal.Body className="flex flex-col items-center">
         <div>

@@ -35,7 +35,14 @@ const PopupDetallesTabla: React.FC<PorpsPopup> = ({
   }
 
   return (
-    <Modal onClose={onClose} size={"lg"} popup show={true} className="z-40">
+    <Modal
+      aria-modal={"true"}
+      onClose={onClose}
+      size={"lg"}
+      popup
+      show={true}
+      className="z-40"
+    >
       <Modal.Header />
       <Modal.Body className="flex flex-col items-center">
         <div>
@@ -54,7 +61,6 @@ const PopupDetallesTabla: React.FC<PorpsPopup> = ({
           {user?.rol === UserRole.ADMIN && (
             <Button color="indigo" onClick={handleShowRolePopup}>
               Cambiar rol
-              {user.rol}
             </Button>
           )}
         </div>

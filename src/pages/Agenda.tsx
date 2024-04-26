@@ -1,5 +1,7 @@
 import { baseUrl } from "@/helpers/constants/BaseURL";
 import { headerBearer } from "@/helpers/constants/Headers";
+import getHoursParsed from "@/helpers/constants/getHours";
+import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
@@ -9,7 +11,7 @@ import toast from "react-hot-toast";
 import { AiOutlineSearch } from "react-icons/ai";
 
 export default function Agenda() {
-  const [fecha, setFecha] = useState<string>("");
+  const [fecha, setFecha] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -47,7 +49,7 @@ export default function Agenda() {
 
   return (
     <main className="p-20">
-      <h1 className="mb-5">Agenda</h1>
+      <h1 className="mb-5">Agenda {fecha && parseDate(fecha)}</h1>
       <div className="flex flex-nowrap gap-5 my-5">
         <FloatingLabel
           label={"Fecha"}
@@ -66,26 +68,31 @@ export default function Agenda() {
       )}
       {data?.data.map((cita, index) => {
         return (
-          <Card key={index} className="">
-            <p>
-              Paciente:
-              <span className="ml-2 text-gray-700">
-                {cita.paciente.nombre} {cita.paciente.apellido}
-              </span>
-            </p>
-            <p>
-              Motivo:
-              <span className="ml-2 text-gray-700">
-                {cita.motivo}
-              </span>
-            </p>
+          <Card key={index}>
+            <div className="grid grid-cols-2 ">
+              <p>
+                Paciente:
+                <span className="ml-2 text-gray-700">
+                  {cita.paciente.nombre} {cita.paciente.apellido}
+                </span>
+              </p>
+              <p>
+                Motivo:
+                <span className="ml-2 text-gray-700">{cita.motivo}</span>
+              </p>
 
-            <p>
-              Hora asignada:
-              <span className="ml-2 text-gray-700">
-                {}
-              </span>
-            </p>
+              <p>
+                Hora asignada:
+                <span className="ml-2 text-gray-700">
+                  {getHoursParsed(cita.fecha.toString())}
+                </span>
+              </p>
+
+              <p>
+                Síntomas:
+                <span className="ml-2 text-gray-700">{cita.sintomas}</span>
+              </p>
+            </div>
           </Card>
         );
       })}

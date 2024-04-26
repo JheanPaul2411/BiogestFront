@@ -54,22 +54,35 @@ export default function UsersTable({
         placeholder={filterPlaceholder}
         onChange={(e) => setGlobalFilter(e.target.value)}
         value={globalFilter}
+        aria-label="Buscar usuarios"
       />
-      <main className="max-w-screen-sm overflow-x-auto">
+      <section className="w-[90%] overflow-x-auto">
         <div className="my-5">
-          <table className="divide-y divide-gray-200 dark:divide-gray-600 my-5 overflow-x-auto">
+          <table
+            className="divide-y divide-gray-200 dark:divide-gray-600 my-5 overflow-x-auto"
+            role="grid"
+            aria-label="Tabla de usuarios"
+          >
             <thead className="bg-gray-100 dark:bg-gray-700">
               {table.getHeaderGroups().map((headerGroup) => (
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                <tr key={data.id}>
+                <tr key={data.id} role="row">
                   {headerGroup.headers.map((header) => {
                     return (
                       <th
                         key={header.id}
                         scope="col"
                         onClick={header.column.getToggleSortingHandler()}
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider dark:text-gray-400"
+                        role="columnheader"
+                        aria-sort={
+                          header.column.getIsSorted()
+                            ? header.column.getIsSorted() === "asc"
+                              ? "ascending"
+                              : "descending"
+                            : "none"
+                        }
                       >
                         {flexRender(
                           header.column.columnDef.header,
@@ -97,11 +110,14 @@ export default function UsersTable({
                       data.find((d) => d.id === parseInt(row.getValue("id")))
                     );
                   }}
+                  role="row"
+                  aria-label={`Fila de usuario ${row.getValue("nombre")}`}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
                       className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
+                      role="cell"
                     >
                       <div className="flex items-center justify-start gap-5">
                         {cell.column.id === "nombre" && (
@@ -112,6 +128,7 @@ export default function UsersTable({
                               )?.photoUrl
                             }
                             rounded
+                            aria-label={`Avatar de ${row.getValue("nombre")}`}
                           />
                         )}
                         {flexRender(
@@ -132,6 +149,7 @@ export default function UsersTable({
                 color="gray"
                 onClick={() => table.setPageIndex(0)}
                 disabled={table.getState().pagination.pageIndex === 0}
+                aria-label="Ir a la primera página"
               >
                 Primera página
               </Button>
@@ -139,6 +157,7 @@ export default function UsersTable({
                 color="gray"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
+                aria-label="Ir a la página anterior"
               >
                 Página anterior
               </Button>
@@ -146,6 +165,7 @@ export default function UsersTable({
                 color="gray"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
+                aria-label="Ir a la página siguiente"
               >
                 Página siguiente
               </Button>
@@ -156,6 +176,7 @@ export default function UsersTable({
                   table.getState().pagination.pageIndex ===
                   table.getPageCount() - 1
                 }
+                aria-label="Ir a la última página"
               >
                 Última página
               </Button>
@@ -174,10 +195,11 @@ export default function UsersTable({
             <PopupDetallesTabla
               selectedUser={selectedUser}
               onClose={() => setShowPopupDetalles(false)}
+              aria-label={`Detalles de ${selectedUser.nombre} ${selectedUser.apellido}`}
             />
           )}
         </div>
-      </main>
+      </section>
     </>
   );
 }
