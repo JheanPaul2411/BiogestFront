@@ -53,7 +53,7 @@ const CitaForm: React.FC = () => {
               message: "Debes llenar este campo",
             },
           })}
-          placeholder="Dolor, etc"
+          placeholder="Consulta prenatal integral, dolor, etc"
         ></Textarea>
         <Label
           className="text-red-500 dark:text-red-500 font-normal text-xs"
@@ -69,7 +69,7 @@ const CitaForm: React.FC = () => {
       {/* SINTOMAS */}
       <div className="flex flex-col">
         <Label className="font-normal" htmlFor="sintomas">
-          Síntomas
+          Síntomas <span className="text-gray-500">(opcional)</span>
         </Label>
         <Textarea
           className="p-2"
@@ -77,7 +77,7 @@ const CitaForm: React.FC = () => {
           cols={30}
           rows={6}
           aria-describedby="sintomas-error"
-          placeholder="En caso de que presente algunos síntomas, especifique."
+          placeholder="Nauseas, fiebre, etc"
           {...register("sintomas", {
             maxLength: {
               value: 200,
@@ -110,13 +110,24 @@ const CitaForm: React.FC = () => {
               value: true,
               message: "Debes llenar una fecha tentativa",
             },
-            validate: (value) => {
-              const fechaCita = new Date(value);
-              const todayDate = new Date();
-              if (fechaCita < todayDate) {
-                return "Debes solicitar tu cita por lo menos con un dia de anticipación.";
+            validate: {
+              fechaValida: (value) => {
+                const fechaCita = new Date(value);
+                const todayDate = new Date();
+                if (fechaCita < todayDate) {
+                  return "Debes solicitar tu cita por lo menos con un día de anticipación.";
+                }
+                return true;
+              },
+              horaValida: (value) => {
+                const fechaCita = new Date(value);
+                const hora = fechaCita.getHours();
+                const minutos = fechaCita.getMinutes();
+                if (hora > 18 || (hora === 18 && minutos > 0)) {
+                  return "La hora de la cita debe ser entre las 08:00 y las 18:00.";
+                }
+                return true;
               }
-              return true;
             },
           })}
         />
