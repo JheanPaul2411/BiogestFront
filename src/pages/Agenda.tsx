@@ -25,9 +25,10 @@ export default function Agenda() {
     queryFn: async () => {
       const newFecha = fecha ? new Date(fecha) : new Date(Date.now());
       const response: AxiosResponse<Cita[]> = await axios.get(
-        `${baseUrl}/cita/agenda?fecha=${newFecha}&aceptada=${true}`,
+        `${baseUrl}/cita/agenda?fecha=${newFecha.toISOString()}&aceptada=${true}`,
         { headers: headerBearer() }
       );
+      console.log(response.data);
       return response;
     },
     enabled: false, // Deshabilita la ejecución automática
@@ -63,39 +64,45 @@ export default function Agenda() {
           <AiOutlineSearch className="mx-2" />
         </Button>
       </div>
-      {data?.data.length === 0 && (
+      {data && data.data && data.data.length === 0 && (
         <h3>No tienes citas programadas para esa fecha</h3>
       )}
-      {data?.data.map((cita, index) => {
-        return (
-          <Card key={index}>
-            <div className="grid grid-cols-2 ">
-              <p>
-                Paciente:
-                <span className="ml-2 text-gray-700">
-                  {cita.paciente.nombre} {cita.paciente.apellido}
-                </span>
-              </p>
-              <p>
-                Motivo:
-                <span className="ml-2 text-gray-700">{cita.motivo}</span>
-              </p>
 
-              <p>
-                Hora asignada:
-                <span className="ml-2 text-gray-700">
-                  {getHoursParsed(cita.fecha.toString())}
-                </span>
-              </p>
+      {data &&
+        data.data &&
+        data.data.length > 0 &&
+        data.data.map((cita, index) => {
+          return (
+            <Card key={index}>
+              <div className="grid grid-cols-2 ">
+                <p>
+                  Paciente:
+                  <span className="ml-2 text-gray-700">
+                    {cita.paciente.nombre!} {cita.paciente.apellido}
+                  </span>
+                </p>
+                <p>
+                  Motivo:
+                  <span className="ml-2 text-gray-700">{cita.motivo}</span>
+                </p>
 
-              <p>
-                Síntomas:
-                <span className="ml-2 text-gray-700">{cita.sintomas}</span>
-              </p>
-            </div>
-          </Card>
-        );
-      })}
+                <p>
+                  Hora asignada:
+                  <span className="ml-2 text-gray-700">
+                    {getHoursParsed(cita.fecha.toString())}
+                  </span>
+                </p>
+
+                {cita.sintomas && (
+                  <p>
+                    Síntomas:
+                    <span className="ml-2 text-gray-700">{cita.sintomas}</span>
+                  </p>
+                )}
+              </div>
+            </Card>
+          );
+        })}
     </main>
   );
 }

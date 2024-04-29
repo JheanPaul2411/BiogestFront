@@ -67,10 +67,9 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
         <div className="flex items-center gap-2">
           <span>Nueva fecha:</span>
           <TextInput
-            type="date"
+            type="datetime-local"
             onChange={(e) => setNewDate(e.target.value)}
             value={newDate}
-            
             aria-label="Seleccionar nueva fecha"
           />
         </div>
