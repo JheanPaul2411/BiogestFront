@@ -1,5 +1,7 @@
 import { baseUrl } from "@/helpers/constants/BaseURL";
 import { headerBearer } from "@/helpers/constants/Headers";
+import { UserRole } from "@/helpers/constants/UserRole";
+import JwtUtils from "@/helpers/constants/ValidateToke";
 import getHoursParsed from "@/helpers/constants/getHours";
 import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
@@ -9,6 +11,7 @@ import { FloatingLabel, Spinner, Button, Card, Avatar } from "flowbite-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineSearch } from "react-icons/ai";
+import { Navigate } from "react-router-dom";
 
 export default function Agenda() {
   const [fecha, setFecha] = useState<string>();
@@ -46,6 +49,10 @@ export default function Agenda() {
 
   if (isError) {
     toast.error(error.message || "Error al cargar los datos");
+  }
+
+  if(!JwtUtils.isTokenValid() || JwtUtils.getUserRole()===UserRole.PACIENTE){
+    return <Navigate to={"/"}/>
   }
 
   return (
