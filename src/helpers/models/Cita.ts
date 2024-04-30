@@ -9,4 +9,7 @@ export interface Cita {
   minutos?: number;
   sintomas?: string;
   aceptada:boolean;
+  apellido?: string;
+  nombre?: string;
+  photoUrl?: string | undefined;
 }

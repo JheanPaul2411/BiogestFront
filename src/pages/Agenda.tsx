@@ -5,7 +5,7 @@ import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
-import { FloatingLabel, Spinner, Button, Card } from "flowbite-react";
+import { FloatingLabel, Spinner, Button, Card, Avatar } from "flowbite-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -75,23 +75,37 @@ export default function Agenda() {
           return (
             <Card key={index}>
               <div className="grid grid-cols-2 ">
-                <p>
-                  Paciente:
-                  <span className="ml-2 text-gray-700">
-                    {cita.paciente.nombre!} {cita.paciente.apellido}
-                  </span>
-                </p>
-                <p>
-                  Motivo:
-                  <span className="ml-2 text-gray-700">{cita.motivo}</span>
-                </p>
+                <div className="flex items-center gap-2">
+                  <p>
+                    Paciente:
+                    <span className="ml-2 text-gray-700">
+                      {cita.nombre} {cita.apellido}
+                    </span>
+                  </p>
+                  {cita.photoUrl && (
+                    <img
+                      src={cita.photoUrl}
+                      alt={`Foto de perfil de ${cita.nombre} ${cita.apellido}`}
+                    />
+                  )}
+                  {cita.photoUrl ?? <Avatar rounded aria-label={`Avatar predeterminado: usuario ${cita.nombre}`}/>}
+                </div>
 
-                <p>
-                  Hora asignada:
-                  <span className="ml-2 text-gray-700">
-                    {getHoursParsed(cita.fecha.toString())}
-                  </span>
-                </p>
+                <div className="flex items-center">
+                  <p>
+                    Motivo:
+                    <span className="ml-2 text-gray-700">{cita.motivo}</span>
+                  </p>
+                </div>
+
+                <div className="flex items-center ">
+                  <p>
+                    Hora asignada:
+                    <span className="ml-2 text-gray-700">
+                      {getHoursParsed(cita.fecha.toString())}
+                    </span>
+                  </p>
+                </div>
 
                 {cita.sintomas && (
                   <p>
