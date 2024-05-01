@@ -12,6 +12,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Navigate } from "react-router-dom";
+import calendarioSVG from "@/assets/ccalendar.svg";
 
 export default function Agenda() {
   const [fecha, setFecha] = useState<string>();
@@ -51,8 +52,11 @@ export default function Agenda() {
     toast.error(error.message || "Error al cargar los datos");
   }
 
-  if(!JwtUtils.isTokenValid() || JwtUtils.getUserRole()===UserRole.PACIENTE){
-    return <Navigate to={"/"}/>
+  if (
+    !JwtUtils.isTokenValid() ||
+    JwtUtils.getUserRole() === UserRole.PACIENTE
+  ) {
+    return <Navigate to={"/"} />;
   }
 
   return (
@@ -70,9 +74,14 @@ export default function Agenda() {
           Buscar Citas
           <AiOutlineSearch className="mx-2" />
         </Button>
+        <img src={calendarioSVG} alt="" className="w-fit" />
       </div>
       {data && data.data && data.data.length === 0 && (
-        <h3>No tienes citas programadas para esa fecha</h3>
+        <section className="w-full flex flex-col items-center justify-center">
+          <h3 className="text-center">
+            No tienes citas programadas para esa fecha
+          </h3>
+        </section>
       )}
 
       {data &&
@@ -95,7 +104,12 @@ export default function Agenda() {
                       alt={`Foto de perfil de ${cita.nombre} ${cita.apellido}`}
                     />
                   )}
-                  {cita.photoUrl ?? <Avatar rounded aria-label={`Avatar predeterminado: usuario ${cita.nombre}`}/>}
+                  {cita.photoUrl ?? (
+                    <Avatar
+                      rounded
+                      aria-label={`Avatar predeterminado: usuario ${cita.nombre}`}
+                    />
+                  )}
                 </div>
 
                 <div className="flex items-center">

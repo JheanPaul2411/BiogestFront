@@ -5,7 +5,7 @@ export default function getHoursParsed(date: string) {
     
     const minutos = fecha.getMinutes().toString().padStart(2, '0');
      // Obtiene los minutos y los ajusta al formato "mm"
-    const horaFormateada = `${hora}:${minutos}`;
+    const horaFormateada = `${hora}:${minutos} h`;
 
     return horaFormateada;
 }

@@ -1,5 +1,6 @@
 import { baseUrl } from "@/helpers/constants/BaseURL";
 import { headerBearer } from "@/helpers/constants/Headers";
+import getHoursParsed from "@/helpers/constants/getHours";
 import { handleErrors } from "@/helpers/handlers/HandleErrors";
 import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
@@ -7,6 +8,7 @@ import axios from "axios";
 import { Modal, TextInput, Button } from "flowbite-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+
 
 interface PropsPopupEditarCita {
   selectedCita: Cita;
@@ -44,35 +46,43 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
       onClose={onClose}
       size={"md"}
       popup
-      
       show={true}
       aria-modal={"true"}
-      aria-label={`Modificar fecha de cita para ${selectedCita.paciente.email}`      
-    }
+      aria-label={`Modificar fecha de cita para ${selectedCita.paciente.email}`}
     >
       <Modal.Header />
       <Modal.Body className="flex flex-col items-center">
         <h2 className="font-semibold text-lg mb-8">
           Modificar fecha de la cita
         </h2>
-        <p>
-          Paciente: <span>{selectedCita.paciente.email}</span>
-        </p>
-        <div className="flex gap-2 my-2">
-          <span className="">Fecha actual:</span>
-          <p className="dark:text-gray-400 atributos">
-            {parseDate(selectedCita.fecha)}
+        <div>
+          <p>
+            Paciente: <span className="text-gray-500 dark:text-gray-400">{selectedCita.paciente.email}</span>
           </p>
+          <div className="flex gap-2 my-2">
+            <span className="">Fecha establecida:</span>
+            <p className="dark:text-gray-400 text-gray-500 atributos">
+              {parseDate(selectedCita.fecha)}
+            </p>
+          </div>
+
+          <div className="flex gap-2 my-2">
+            <p className="">Hora establecida:</p>
+            <span className="text-gray-500 dark:text-gray-400">
+              {getHoursParsed(new Date(selectedCita.fecha).toISOString())}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span>Nueva fecha:</span>
+            <TextInput
+              type="datetime-local"
+              onChange={(e) => setNewDate(e.target.value)}
+              value={newDate}
+              aria-label="Seleccionar nueva fecha"
+            />
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span>Nueva fecha:</span>
-          <TextInput
-            type="datetime-local"
-            onChange={(e) => setNewDate(e.target.value)}
-            value={newDate}
-            aria-label="Seleccionar nueva fecha"
-          />
-        </div>
+
         <div className="flex w-full gap-3 mt-10">
           <Button
             color="purple"

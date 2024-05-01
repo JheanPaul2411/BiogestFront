@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { parseDate } from "@/helpers/handlers/ParseDate";
 import "./CardCitas.css";
 import toast from "react-hot-toast";
+import getHoursParsed from "@/helpers/constants/getHours";
 
 interface Props {
   citas: Cita[];
@@ -149,6 +150,10 @@ function CardCitas({ citas }: Props) {
                 {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                 {/* @ts-ignore */}
                 <h2 className="atributos"> &nbsp; {parseDate(cita.fecha)}</h2>
+              </div>
+              <div className="col-span-1 motivo flex gap-2">
+                <span className="titulos">Hora:</span>
+                <p className="atributos">{getHoursParsed(new Date(cita.fecha).toISOString())}</p>
               </div>
               <div className="col-span-1 motivo flex gap-2">
                 <span className="titulos">Motivo de la cita:</span>
