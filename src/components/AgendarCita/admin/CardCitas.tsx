@@ -6,84 +6,86 @@ import { isAproabda } from "@/helpers/handlers/HandlerCitas";
 import { Cita } from "@/helpers/models/Cita";
 import axios from "axios";
 import { Button } from "flowbite-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { parseDate } from "@/helpers/handlers/ParseDate";
 import "./CardCitas.css";
 import toast from "react-hot-toast";
 import getHoursParsed from "@/helpers/constants/getHours";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-interface Props {
-  citas: Cita[];
-}
-
-function CardCitas({ citas }: Props) {
+export default function CardCitas() {
   const [showReagendarModal, setShowReagendarModal] = useState<boolean>(false);
   const [showPopupConfirmarCita, setShowPopupConfirmarCita] =
     useState<boolean>(false);
   const [selectedCita, setSelectedCita] = useState<Cita | null>(null);
   const [filtroAceptada, setFiltroAceptada] = useState<boolean | null>(null);
-  const [citasActualizadas, setCitasActualizadas] = useState<Cita[]>([]);
 
-  useEffect(() => {
-    setCitasActualizadas(citas);
-  }, [citas]);
 
-  function handleReagendar(cita: Cita) {
-    setSelectedCita(cita);
-    setShowReagendarModal(true);
-  }
+  const {
+    data: citasData,
+    isLoading: citasLoading,
+    isError: citasError,
+    refetch,
+  } = useQuery({
+    queryKey: ["get_all_citas"],
+    queryFn: async () => {
+      const response = await axios.get(`${baseUrl}/cita`, {
+        headers: headerBearer(),
+      });
+      return response.data;
+    },
+  });
 
-  function handleConfirmarAgendacion(cita: Cita) {
-    setSelectedCita(cita);
-    setShowPopupConfirmarCita(true);
-  }
-
-  function handleFiltrarAceptadas(aceptada: boolean | null) {
-    setFiltroAceptada(aceptada);
-  }
-
-  async function actualizarCitaEnServidor(citaActualizada: Cita) {
-    try {
-      const response = await axios.put(
-        `${baseUrl}/cita/${citaActualizada.id}`,
-        { fecha: citaActualizada.fecha },
+  const { mutate } = useMutation({
+    mutationKey: ["patch_cita", selectedCita],
+    mutationFn: async (cita: Partial<Cita>) => {
+      const response = await axios.patch(
+        `${baseUrl}/cita/${selectedCita?.id}`,
+        cita,
         { headers: headerBearer() }
       );
-      console.log(response);
-      return true;
-    } catch (error) {
-      console.error("Error al actualizar la fecha de la cita:", error);
-      return false;
-    }
-  }
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Has reagendado la cita correctamente");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(`Error al reagendar la cita: ${error.message}`);
+    },
+  });
 
-  const handleReagendamientoCita = async (citaActualizada: Cita) => {
-    const exito = await actualizarCitaEnServidor(citaActualizada);
-    if (exito) {
-      const citasActualizadas = citas.map((cita) => {
-        if (cita.id === citaActualizada.id) {
-          return citaActualizada;
-        }
-        return cita;
-      });
-
-      // Ordenar las citas por fecha después de actualizar
-      citasActualizadas.sort(
-        (a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
-      );
-      setCitasActualizadas(citasActualizadas);
-      setShowReagendarModal(false);
-    } else {
-      toast.error(
-        "Hubo un error al reagendar la cita. Por favor, intenta de nuevo más tarde."
-      );
-    }
+  const handleFiltrarAceptadas = (aceptada: boolean | null) => {
+    setFiltroAceptada(aceptada);
   };
 
+  const citasActualizadas = citasData || [];
   const citasFiltradas =
     filtroAceptada !== null
-      ? citasActualizadas.filter((cita) => cita.aceptada === filtroAceptada)
+      ? citasActualizadas.filter((cita: { aceptada: boolean; }) => cita.aceptada === filtroAceptada)
       : citasActualizadas;
+
+  const handleConfirmarAgendacion = (cita: Cita) => {
+    setSelectedCita(cita);
+    setShowPopupConfirmarCita(true);
+  };
+
+  const handleReagendar = (cita: Cita) => {
+    setSelectedCita(cita);
+    setShowReagendarModal(true);
+  };
+
+  const handleReagendamientoCita = (citaActualizada: Partial<Cita>) => {
+    mutate(citaActualizada);
+  };
+
+  if (citasLoading) {
+    return <div>Cargando...</div>;
+  }
+
+  if (citasError) {
+    return <div>Error al cargar las citas</div>;
+  }
 
   return (
     <>
@@ -123,7 +125,7 @@ function CardCitas({ citas }: Props) {
         role="list"
         aria-label="Lista de citas"
       >
-        {citasFiltradas.map((cita) => (
+        {citasFiltradas.map((cita: Cita) => (
           <div
             key={cita.id}
             className={`citas_contenedor ${
@@ -147,13 +149,13 @@ function CardCitas({ citas }: Props) {
               </div>
               <div className="col-span-1 flex">
                 <span className="titulos">Fecha de la cita:</span>
-                {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                {/* @ts-ignore */}
                 <h2 className="atributos"> &nbsp; {parseDate(cita.fecha)}</h2>
               </div>
               <div className="col-span-1 motivo flex gap-2">
                 <span className="titulos">Hora:</span>
-                <p className="atributos">{getHoursParsed(new Date(cita.fecha).toISOString())}</p>
+                <p className="atributos">
+                  {getHoursParsed(new Date(cita.fecha).toISOString())}
+                </p>
               </div>
               <div className="col-span-1 motivo flex gap-2">
                 <span className="titulos">Motivo de la cita:</span>
@@ -201,12 +203,11 @@ function CardCitas({ citas }: Props) {
             </div>
           </div>
         ))}
-
         {selectedCita && showReagendarModal && (
           <PopupEditarCita
             selectedCita={selectedCita}
             onClose={() => setShowReagendarModal(false)}
-            onReagendar={handleReagendamientoCita}
+            mutation={mutate}
             aria-label={`Reagendar cita para ${
               selectedCita.paciente
                 ? `${selectedCita.paciente.nombre} ${selectedCita.paciente.apellido}`
@@ -230,5 +231,3 @@ function CardCitas({ citas }: Props) {
     </>
   );
 }
-
-export default CardCitas;

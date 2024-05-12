@@ -30,10 +30,15 @@ function Register() {
   });
 
   return (
-    <section id="container_login" className="w-full">
+    <section
+      id="container_login"
+      className="w-full"
+      aria-label="Sección de registro"
+    >
       <section
         id="image-side"
         className="w-auto h-auto flex flex-col items-center justify-center"
+        aria-label="Sección de imagen"
       >
         <h1 className="text-white text-3xl text text-center">
           Somos lo mejor en calidad
@@ -45,6 +50,7 @@ function Register() {
         id="form_login"
         onSubmit={submit}
         className="w-full bg-gray-200 dark:bg-gray-800"
+        aria-label="Formulario de registro"
       >
         {/* Foto de perfil */}
         <div className="flex-col lg:col-span-2">
@@ -55,10 +61,13 @@ function Register() {
             accept="image/*"
             type="file"
             {...register("photoUrl")}
+            aria-label="Campo de foto de perfil"
           />
           <Label
             className="text-red-500 dark:text-red-500 font-normal text-xs"
             hidden={!errors.photoUrl}
+            role="alert"
+            aria-live="assertive"
           >
             {errors.photoUrl?.message}
           </Label>
@@ -77,10 +86,14 @@ function Register() {
                 message: "Debes llenar este campo",
               },
             })}
+            aria-label="Campo de nombres"
+            aria-required="true"
           />
           <Label
             className="text-red-500 dark:text-red-500 font-normal text-xs"
             hidden={!errors.nombre}
+            role="alert"
+            aria-live="assertive"
           >
             {errors.nombre?.message}
           </Label>
@@ -102,10 +115,14 @@ function Register() {
                 message: "El apellido no puede tener mas de 20 caracteres",
               },
             })}
+            aria-label="Campo de apellido"
+            aria-required="true"
           />
           <Label
             className="text-red-500 dark:text-red-500 font-normal text-xs"
             hidden={!errors.apellido}
+            role="alert"
+            aria-live="assertive"
           >
             {errors.apellido?.message}
           </Label>
@@ -132,10 +149,14 @@ function Register() {
                 message: "La cedula debe tener 10 caracteres",
               },
             })}
+            aria-label="Campo de cédula"
+            aria-required="true"
           />
           <Label
             className="text-red-500 dark:text-red-500 font-normal text-xs"
             hidden={!errors.cedula}
+            role="alert"
+            aria-live="assertive"
           >
             {errors.cedula?.message}
           </Label>
@@ -158,10 +179,14 @@ function Register() {
                 message: "Por favor, ingresa un número de contacto válido",
               },
             })}
+            aria-label="Campo de número de contacto"
+            aria-required="true"
           />
           <Label
             className="text-red-500 dark:text-red-500 font-normal text-xs"
             hidden={!errors.contacto}
+            role="alert"
+            aria-live="assertive"
           >
             {errors.contacto?.message}
           </Label>
@@ -184,10 +209,14 @@ function Register() {
                 message: "Debes colocar un correo electrónico válido",
               },
             })}
+            aria-label="Campo de correo electrónico"
+            aria-required="true"
           />
           <Label
             className="text-red-500 dark:text-red-500 font-normal text-xs"
             hidden={!errors.email}
+            role="alert"
+            aria-live="assertive"
           >
             {errors.email?.message}
           </Label>
@@ -204,19 +233,20 @@ function Register() {
                 value: true,
                 message: "Debes llenar este campo",
               },
+
               minLength: {
                 value: 8,
                 message: "La contraseña debe ser de al menos 8 caracteres",
               },
-              maxLength: {
-                value: 16,
-                message: "La contraseña debe ser de máximo 16 caracteres",
-              },
             })}
+            aria-label="Campo de contraseña"
+            aria-required="true"
           />
           <Label
             className="text-red-500 dark:text-red-500 font-normal text-xs"
             hidden={!errors.password}
+            role="alert"
+            aria-live="assertive"
           >
             {errors.password?.message}
           </Label>
@@ -234,10 +264,14 @@ function Register() {
                 message: "Debes llenar este campo",
               },
             })}
+            aria-label="Campo de fecha de nacimiento"
+            aria-required="true"
           />
           <Label
             className="text-red-500 dark:text-red-500 font-normal text-xs"
             hidden={!errors.fecha_nacimiento}
+            role="alert"
+            aria-live="assertive"
           >
             {errors.fecha_nacimiento?.message}
           </Label>
@@ -247,12 +281,24 @@ function Register() {
           type="submit"
           color="purple"
           className="mt-2 lg:col-span-2"
+          role="button"
+          aria-label="Botón de registro"
         >
           Registrarse
         </Button>
-        <a href="" className="text-center dark:text-gray-300 lg:col-span-2">
+        <a
+          href=""
+          className="text-center dark:text-gray-300 lg:col-span-2"
+          role="link"
+          aria-label="Enlace para iniciar sesión"
+        >
           ¿Ya tienes una cuenta?{" "}
-          <Link className="font-bold text-purple-500" to={"/login"}>
+          <Link
+            className="font-bold text-purple-500 dark:text-purple-400"
+            to={"/login"}
+            role="link"
+            aria-label="Enlace para iniciar sesión"
+          >
             Inicia sesión
           </Link>
         </a>

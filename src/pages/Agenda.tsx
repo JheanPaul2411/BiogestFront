@@ -5,7 +5,7 @@ import JwtUtils from "@/helpers/constants/ValidateToke";
 import getHoursParsed from "@/helpers/constants/getHours";
 import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { FloatingLabel, Spinner, Button, Card, Avatar } from "flowbite-react";
 import { useState } from "react";
@@ -13,10 +13,14 @@ import toast from "react-hot-toast";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Navigate } from "react-router-dom";
 import calendarioSVG from "@/assets/ccalendar.svg";
+import PopupEditarCita from "@/components/Popups/Cita/PopupModificarCita";
 
 export default function Agenda() {
   const [fecha, setFecha] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showReagendarModal, setShowReagendarModal] = useState<boolean>(false);
+  const [selectedCita, setSelectedCita] = useState<Cita | null>(null);
+  const newFecha = fecha ? new Date(fecha) : new Date(Date.now());
 
   const {
     data,
@@ -25,9 +29,8 @@ export default function Agenda() {
     refetch,
     error,
   } = useQuery({
-    queryKey: ["agenda", fecha],
+    queryKey: ["get_agenda"],
     queryFn: async () => {
-      const newFecha = fecha ? new Date(fecha) : new Date(Date.now());
       const response: AxiosResponse<Cita[]> = await axios.get(
         `${baseUrl}/cita/agenda?fecha=${newFecha.toISOString()}&aceptada=${true}`,
         { headers: headerBearer() }
@@ -36,6 +39,25 @@ export default function Agenda() {
       return response;
     },
     enabled: false, // Deshabilita la ejecución automática
+  });
+
+  const { mutate } = useMutation({
+    mutationKey: ["patch_cita", selectedCita],
+    mutationFn: async (cita: Partial<Cita>) => {
+      const response = axios.patch(
+        `${baseUrl}/cita/${selectedCita?.id}`,
+        cita,
+        { headers: headerBearer() }
+      );
+      return response;
+    },
+    onSuccess: () => {
+      toast.success("Has reagendado la cita correctamente");
+      refetch()
+    },
+    onError: (error) => {
+      toast.error(`Error al reagendar la cita: ${error.message}`);
+    },
   });
 
   const handleFetchData = async () => {
@@ -61,7 +83,9 @@ export default function Agenda() {
 
   return (
     <main className="p-20">
-      <h1 className="mb-5">Agenda {fecha && parseDate(fecha)}</h1>
+      <h1 className="mb-5 text-gray-700 dark:text-gray-300">
+        Agenda {fecha && parseDate(fecha)}
+      </h1>
       <div className="flex flex-nowrap gap-5 my-5">
         <FloatingLabel
           label={"Fecha"}
@@ -74,13 +98,13 @@ export default function Agenda() {
           Buscar Citas
           <AiOutlineSearch className="mx-2" />
         </Button>
-        <img src={calendarioSVG} alt="" className="w-fit" />
       </div>
       {data && data.data && data.data.length === 0 && (
-        <section className="w-full flex flex-col items-center justify-center">
-          <h3 className="text-center">
+        <section className="w-full grid grid-cols-1 md:grid-cols-2">
+          <h3 className="text-center text-4xl m-5 dark:text-red-200 text-purple-900">
             No tienes citas programadas para esa fecha
           </h3>
+          <img src={calendarioSVG} alt="" className="h-[30vh]" />
         </section>
       )}
 
@@ -128,6 +152,24 @@ export default function Agenda() {
                   </p>
                 </div>
 
+                <div className="flex items-center gap-5">
+                  <Button
+                    onClick={() => {
+                      const filteredCitas = data.data.filter(
+                        (data) => data.id === cita?.id
+                      );
+                      if (filteredCitas.length > 0) {
+                        setSelectedCita(filteredCitas[0]);
+                        setShowReagendarModal(true);
+                      }
+                      setShowReagendarModal(true);
+                    }}
+                  >
+                    Reagendar
+                  </Button>
+                  <Button>Nueva incidencia en el historial</Button>
+                </div>
+
                 {cita.sintomas && (
                   <p>
                     Síntomas:
@@ -138,6 +180,18 @@ export default function Agenda() {
             </Card>
           );
         })}
+      {selectedCita && showReagendarModal && (
+        <PopupEditarCita
+          selectedCita={selectedCita}
+          onClose={() => setShowReagendarModal(false)}
+          mutation={mutate}
+          aria-label={`Reagendar cita para ${
+            selectedCita.paciente
+              ? `${selectedCita.paciente.nombre} ${selectedCita.paciente.apellido}`
+              : "Paciente sin asignar"
+          }`}
+        />
+      )}
     </main>
   );
 }

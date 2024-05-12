@@ -1,45 +1,26 @@
-import { baseUrl } from "@/helpers/constants/BaseURL";
-import { headerBearer } from "@/helpers/constants/Headers";
 import getHoursParsed from "@/helpers/constants/getHours";
-import { handleErrors } from "@/helpers/handlers/HandleErrors";
 import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
-import axios from "axios";
+import { UseMutateFunction } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 import { Modal, TextInput, Button } from "flowbite-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
-
 
 interface PropsPopupEditarCita {
-  selectedCita: Cita;
+  selectedCita: Partial<Cita>;
   onClose: () => void;
-  onReagendar: (citaActualizada: Cita) => void; // Función para manejar el reagendamiento de la cita
+  onReagendar?: (citaActualizada: Cita) => void; // Función para manejar el reagendamiento de la cita
+  mutation?: UseMutateFunction<AxiosResponse, Error, Partial<Cita>, unknown>;
 }
 
 const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
   selectedCita,
   onClose,
-  onReagendar,
+  mutation
 }) => {
   const [newDate, setNewDate] = useState("");
 
-  async function handleEditFecha() {
-    if (!selectedCita || !newDate) return;
-    const updatedCita: Cita = { ...selectedCita, fecha: new Date(newDate) };
-    try {
-      await axios.put(
-        `${baseUrl}/cita/${updatedCita.id}`,
-        { fecha: new Date(newDate) },
-        { headers: headerBearer() }
-      );
-      onReagendar(updatedCita); // Llamar a la función onReagendar con la cita actualizada
-      onClose();
-      toast.success("Se ha actualizado la fecha de la cita.");
-      window.location.reload();
-    } catch (error) {
-      handleErrors(error);
-    }
-  }
+
 
   return (
     <Modal
@@ -48,7 +29,7 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
       popup
       show={true}
       aria-modal={"true"}
-      aria-label={`Modificar fecha de cita para ${selectedCita.paciente.email}`}
+      aria-label={`Modificar fecha de cita para ${selectedCita?.nombre} ${selectedCita?.apellido}`}
     >
       <Modal.Header />
       <Modal.Body className="flex flex-col items-center">
@@ -57,7 +38,10 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
         </h2>
         <div>
           <p>
-            Paciente: <span className="text-gray-500 dark:text-gray-400">{selectedCita.paciente.email}</span>
+            Paciente:{" "}
+            <span className="text-gray-500 dark:text-gray-400">
+            {selectedCita?.nombre} {selectedCita?.apellido}
+            </span>
           </p>
           <div className="flex gap-2 my-2">
             <span className="">Fecha establecida:</span>
@@ -69,7 +53,7 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
           <div className="flex gap-2 my-2">
             <p className="">Hora establecida:</p>
             <span className="text-gray-500 dark:text-gray-400">
-              {getHoursParsed(new Date(selectedCita.fecha).toISOString())}
+              {getHoursParsed(new Date(selectedCita.fecha!).toISOString())}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -87,7 +71,11 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
           <Button
             color="purple"
             className="flex-grow"
-            onClick={handleEditFecha}
+            onClick={() => {
+              if(mutation){
+                mutation({fecha:new Date(newDate)})
+              }
+            }}
             role="button"
             aria-label="Confirmar nueva fecha"
           >

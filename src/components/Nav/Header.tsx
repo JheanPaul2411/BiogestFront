@@ -129,6 +129,8 @@ function NavBar() {
                       rounded
                       img={user?.photoUrl}
                       alt="Avatar genérico"
+                      aria-label="boton para abrir el menu del usuario"
+                      role="button"
                     />
                   }
                   aria-label="Menú de inicio de sesión"
