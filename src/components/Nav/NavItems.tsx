@@ -8,14 +8,15 @@ interface Props {
 
 export default function NavItemsByRole({ role }: Props) {
   const { pathname } = useLocation();
-
   return (
     <>
       {role === UserRole.ADMIN && (
         <NavbarCollapse>
-          <NavbarLink href="/" active={pathname === "/"} aria-label="Inicio" 
+          <NavbarLink
+            href="/"
+            active={pathname === "/"}
+            aria-label="Inicio"
             role="link"
-          
           >
             Inicio
           </NavbarLink>
@@ -27,22 +28,21 @@ export default function NavItemsByRole({ role }: Props) {
           >
             Citas pendientes
           </NavbarLink>
+
           <NavbarLink
             href="/agenda"
             active={pathname === "/agenda"}
             aria-label="Agenda"
-
             role="link"
-
           >
             Agenda
           </NavbarLink>
+
           <NavbarLink
             href="/usuarios"
             active={pathname === "/usuarios"}
             aria-label="Usuarios"
             role="link"
-
           >
             Usuarios
           </NavbarLink>
@@ -58,18 +58,26 @@ export default function NavItemsByRole({ role }: Props) {
             active={pathname === "/agendar_cita"}
             aria-label="Agendar cita"
             role="link"
-
           >
             Agendar Cita
           </NavbarLink>
-          <NavbarLink
-            href="/pacientes"
-            active={pathname === "/pacientes"}
-            aria-label="Pacientes"
-            role="link"
 
+          <NavbarLink
+            href="/agenda"
+            active={pathname === "/agenda"}
+            aria-label="Agenda"
+            role="link"
           >
-            Pacientes
+            Agenda
+          </NavbarLink>
+
+          <NavbarLink
+            href="/usuarios"
+            active={pathname === "/usuarios"}
+            aria-label="usuarios"
+            role="link"
+          >
+            Usuarios
           </NavbarLink>
         </NavbarCollapse>
       )}
@@ -83,7 +91,6 @@ export default function NavItemsByRole({ role }: Props) {
             active={pathname === "/agendar_cita"}
             aria-label="Agendar cita"
             role="link"
-
           >
             Agendar Cita
           </NavbarLink>
@@ -92,7 +99,6 @@ export default function NavItemsByRole({ role }: Props) {
             active={pathname === "/historial_medico"}
             aria-label="Mi historial médico"
             role="link"
-
           >
             Mi historial médico
           </NavbarLink>

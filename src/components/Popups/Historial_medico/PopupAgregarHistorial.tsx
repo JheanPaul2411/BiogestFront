@@ -2,7 +2,7 @@ import { handleErrors } from "@/helpers/handlers/HandleErrors";
 import handleRegistrarHistorial from "@/helpers/handlers/handleRegistrarHistorial";
 import { HistorialMedico } from "@/helpers/models/HistorialMedico";
 import { Usuario } from "@/helpers/models/User";
-import { Modal, Label, TextInput, Textarea, Button } from "flowbite-react";
+import { Modal, Label, TextInput, Button } from "flowbite-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Accordion } from "flowbite-react";
@@ -73,6 +73,7 @@ const PopupAgregarHistorial: React.FC<PropsPopupEditarCita> = ({
                     type="number"
                     id="peso"
                     name="peso"
+                    placeholder="65"
                     value={historialMedico.peso || ""}
                     onChange={handleChange}
                   />
@@ -86,18 +87,20 @@ const PopupAgregarHistorial: React.FC<PropsPopupEditarCita> = ({
                     type="text"
                     id="presionArterial"
                     name="presionArterial"
+                    placeholder="120 / 80"
                     value={historialMedico.presionArterial}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="flex flex-col">
                   <Label htmlFor="temperatura" className="mb-2">
-                    Temperatura:
+                    Temperatura (°C):
                   </Label>
                   <TextInput
                     type="number"
                     id="temperatura"
                     name="temperatura"
+                    placeholder="35"
                     value={historialMedico.temperatura || ""}
                     onChange={handleChange}
                   />
@@ -116,6 +119,7 @@ const PopupAgregarHistorial: React.FC<PropsPopupEditarCita> = ({
                     type="text"
                     id="enfermedades"
                     name="enfermedades"
+                    placeholder="Especifique cuales."
                     value={historialMedico.enfermedades}
                     onChange={handleChange}
                   />
@@ -128,29 +132,32 @@ const PopupAgregarHistorial: React.FC<PropsPopupEditarCita> = ({
                     type="text"
                     id="alergias"
                     name="alergias"
+                    placeholder="Especifique cuales."
                     value={historialMedico.alergias}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="flex flex-col mb-4 md:mr-4">
                   <Label htmlFor="medicamentos" className="mb-2">
-                    Medicamentos:
+                    ¿Ha tomado algún medicamento esta semana?
                   </Label>
                   <TextInput
                     type="text"
                     id="medicamentos"
                     name="medicamentos"
+                    placeholder="Especifique cuales."
                     value={historialMedico.medicamentos}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="flex flex-col mb-4 md:mr-4">
                   <Label htmlFor="antecedentesFamiliares" className="mb-2">
-                    Antecedentes Familiares:
+                    Antecedentes médicos familiares de consideración:
                   </Label>
-                  <Textarea
+                  <TextInput
                     id="antecedentesFamiliares"
                     name="antecedentesFamiliares"
+                    placeholder="Espeficique cuales"
                     value={historialMedico.antecedentesFamiliares}
                     onChange={handleChange}
                   />
@@ -163,11 +170,12 @@ const PopupAgregarHistorial: React.FC<PropsPopupEditarCita> = ({
               <Accordion.Content>
                 <div className="flex flex-col mb-4 md:mr-4">
                   <Label htmlFor="observaciones" className="mb-2">
-                    Observaciones:
+                    Observaciones de la cita:
                   </Label>
-                  <Textarea
+                  <TextInput
                     id="observaciones"
                     name="observaciones"
+                    placeholder="¿Presenta alguna anomalía? Especifique"
                     value={historialMedico.observaciones}
                     onChange={handleChange}
                   />
@@ -176,9 +184,10 @@ const PopupAgregarHistorial: React.FC<PropsPopupEditarCita> = ({
                   <Label htmlFor="diagnostico" className="mb-2">
                     Diagnóstico:
                   </Label>
-                  <Textarea
+                  <TextInput
                     id="diagnostico"
                     name="diagnostico"
+                    placeholder="Especifique"
                     value={historialMedico.diagnostico}
                     onChange={handleChange}
                   />
@@ -187,9 +196,10 @@ const PopupAgregarHistorial: React.FC<PropsPopupEditarCita> = ({
                   <Label htmlFor="tratamiento" className="mb-2">
                     Tratamiento:
                   </Label>
-                  <Textarea
+                  <TextInput
                     id="tratamiento"
                     name="tratamiento"
+                    placeholder="¿Qué debe hacer el paciente?"
                     value={historialMedico.tratamiento}
                     onChange={handleChange}
                   />

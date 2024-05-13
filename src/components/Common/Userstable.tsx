@@ -57,7 +57,7 @@ export default function UsersTable({
         aria-label="Buscar usuarios"
       />
       <section className="w-[90%] overflow-x-auto">
-        <div className="my-5">
+        <div className="my-5 flex flex-col items-center justify-center">
           <table
             className="divide-y divide-gray-200 dark:divide-gray-600 my-5 overflow-x-auto"
             role="grid"

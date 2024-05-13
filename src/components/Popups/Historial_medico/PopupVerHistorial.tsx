@@ -19,7 +19,7 @@ const PopupVerHistorial: React.FC<PropsPopupEditarCita> = ({
     <Modal
       aria-modal={"true"}
       onClose={onClose}
-      size={"8xl"}
+      size={"7xl"}
       popup
       show={true}
       className="z-50"

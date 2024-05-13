@@ -31,7 +31,6 @@ function App() {
 
           <Route path="/usuarios" element={<Usuarios />}></Route>
 
-          <Route path="/pacientes" element={<Usuarios />}></Route>
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

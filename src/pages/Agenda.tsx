@@ -14,6 +14,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { Navigate } from "react-router-dom";
 import calendarioSVG from "@/assets/ccalendar.svg";
 import PopupEditarCita from "@/components/Popups/Cita/PopupModificarCita";
+import PopupAgregarHistorial from "@/components/Popups/Historial_medico/PopupAgregarHistorial";
 
 export default function Agenda() {
   const [fecha, setFecha] = useState<string>();
@@ -21,6 +22,9 @@ export default function Agenda() {
   const [showReagendarModal, setShowReagendarModal] = useState<boolean>(false);
   const [selectedCita, setSelectedCita] = useState<Cita | null>(null);
   const newFecha = fecha ? new Date(fecha) : new Date(Date.now());
+
+
+  const [showIncidencia, setShowIncidencia] = useState<boolean>(false);
 
   const {
     data,
@@ -35,7 +39,6 @@ export default function Agenda() {
         `${baseUrl}/cita/agenda?fecha=${newFecha.toISOString()}&aceptada=${true}`,
         { headers: headerBearer() }
       );
-      console.log(response.data);
       return response;
     },
     enabled: false, // Deshabilita la ejecución automática
@@ -167,7 +170,16 @@ export default function Agenda() {
                   >
                     Reagendar
                   </Button>
-                  <Button>Nueva incidencia en el historial</Button>
+                  <Button onClick={()=>{
+                      const filteredCitas = data.data.filter(
+                        (data) => data.id === cita?.id
+                      );
+                      if (filteredCitas.length > 0) {
+                        setSelectedCita(filteredCitas[0]);
+                        setShowIncidencia(true);
+                      }
+                      setShowIncidencia(true);
+                  }}>Nueva incidencia en el historial</Button>
                 </div>
 
                 {cita.sintomas && (
@@ -191,6 +203,10 @@ export default function Agenda() {
               : "Paciente sin asignar"
           }`}
         />
+      )}
+
+      {selectedCita && showIncidencia && (
+        <PopupAgregarHistorial selectedUser={{nombre: selectedCita.nombre, apellido:selectedCita.apellido, id:selectedCita.pacienteId}} onClose={()=>setShowIncidencia(false)}/>
       )}
     </main>
   );

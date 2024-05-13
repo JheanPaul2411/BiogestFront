@@ -21,6 +21,7 @@ import {
 import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import NavItemsByRole from "./NavItems";
+import JwtUtils from "@/helpers/constants/ValidateToke";
 
 function NavBar() {
   const { pathname } = useLocation();
@@ -160,7 +161,7 @@ function NavBar() {
           {isLoggedIn ? (
             <>
               <NavbarCollapse>
-                <NavItemsByRole role={user?.rol} />
+                <NavItemsByRole role={JwtUtils.getUserRole()} />
               </NavbarCollapse>
             </>
           ) : (

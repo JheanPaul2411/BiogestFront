@@ -16,12 +16,12 @@ export default function Usuarios() {
     );
   }
 
-  if(!JwtUtils.isTokenValid() || JwtUtils.getUserRole() !== UserRole.ADMIN){
+  if(!JwtUtils.isTokenValid() || JwtUtils.getUserRole() === UserRole.PACIENTE){
     return <Navigate to={"/"}/>
   }
 
   return (
-    <main className="mt-10 min-w-screen min-h-[100%] flex flex-col items-center ">
+    <main className="mt-10 min-w-screen min-h-[100%] flex flex-col items-center justify-center">
     <UsersTable
         data={users}
         columns={columnsUser}

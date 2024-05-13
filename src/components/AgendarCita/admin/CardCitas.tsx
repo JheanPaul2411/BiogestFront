@@ -75,10 +75,6 @@ export default function CardCitas() {
     setShowReagendarModal(true);
   };
 
-  const handleReagendamientoCita = (citaActualizada: Partial<Cita>) => {
-    mutate(citaActualizada);
-  };
-
   if (citasLoading) {
     return <div>Cargando...</div>;
   }
