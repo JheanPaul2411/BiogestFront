@@ -32,7 +32,7 @@ function Register() {
   return (
     <section
       id="container_login"
-      className="w-full"
+      className="w-full h-full"
       aria-label="Sección de registro"
     >
       <section
@@ -43,13 +43,13 @@ function Register() {
         <h1 className="text-white text-3xl text text-center">
           Somos lo mejor en calidad
         </h1>
-        <span>Inicia sesión para acceder a todas nuestras funcionalidades</span>
+        <span className="text-white">Inicia sesión para acceder a todas nuestras funcionalidades</span>
       </section>
 
       <form
         id="form_login"
         onSubmit={submit}
-        className="w-full bg-gray-200 dark:bg-gray-800"
+        className="bg-gray-100 dark:bg-gray-800 flex-col items-center justify-center"
         aria-label="Formulario de registro"
       >
         {/* Foto de perfil */}

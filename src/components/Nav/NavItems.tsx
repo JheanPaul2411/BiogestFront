@@ -56,10 +56,10 @@ export default function NavItemsByRole({ role }: Props) {
           <NavbarLink
             href="/agendar_cita"
             active={pathname === "/agendar_cita"}
-            aria-label="Agendar cita"
+            aria-label="Citas pendientes"
             role="link"
           >
-            Agendar Cita
+            Citas pendientes
           </NavbarLink>
 
           <NavbarLink

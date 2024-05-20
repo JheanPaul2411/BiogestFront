@@ -42,7 +42,7 @@ function Login() {
       <form
         id="form_login"
         onSubmit={submit}
-        className="w-full bg-gray-200 dark:bg-gray-800"
+        className="w-full bg-gray-100 dark:bg-gray-800"
         aria-label="Formulario de inicio de sesión"
       >
         {/* EMAIL */}
