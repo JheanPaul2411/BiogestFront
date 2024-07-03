@@ -169,7 +169,7 @@ export default function CardCitas() {
               </div>
               <div className="col-span-1 flex">
                 <span className="titulos">Fecha de la cita:</span>
-                <h2 className="atributos"> &nbsp; {parseDate(cita.fecha)}</h2>
+                <p className="atributos"> &nbsp; {parseDate(cita.fecha)}</p>
               </div>
               <div className="col-span-1 motivo flex gap-2">
                 <span className="titulos">Hora:</span>
