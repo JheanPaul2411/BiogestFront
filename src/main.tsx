@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './helpers/context/AuthProvider.tsx'
 import { UserProvider } from './helpers/context/UserPrivider.tsx'
 import { Toaster } from 'react-hot-toast';
+import 'rsuite/dist/rsuite.min.css';  // or 'rsuite/styles/index.less';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

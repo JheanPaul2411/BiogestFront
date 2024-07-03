@@ -11,15 +11,14 @@ import { parseDate } from "@/helpers/handlers/ParseDate";
 import "./CardCitas.css";
 import toast from "react-hot-toast";
 import getHoursParsed from "@/helpers/constants/getHours";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function CardCitas() {
   const [showReagendarModal, setShowReagendarModal] = useState<boolean>(false);
-  const [showPopupConfirmarCita, setShowPopupConfirmarCita] =
-    useState<boolean>(false);
+  const [showPopupConfirmarCita, setShowPopupConfirmarCita] = useState<boolean>(false);
   const [selectedCita, setSelectedCita] = useState<Cita | null>(null);
   const [filtroAceptada, setFiltroAceptada] = useState<boolean | null>(null);
-
+  const queryClient = useQueryClient();
 
   const {
     data: citasData,
@@ -36,7 +35,7 @@ export default function CardCitas() {
     },
   });
 
-  const { mutate } = useMutation({
+  const { mutate: mutateReagendar } = useMutation({
     mutationKey: ["patch_cita", selectedCita],
     mutationFn: async (cita: Partial<Cita>) => {
       const response = await axios.patch(
@@ -44,6 +43,7 @@ export default function CardCitas() {
         cita,
         { headers: headerBearer() }
       );
+      queryClient.invalidateQueries({queryKey:["get_all_citas"]})
       return response.data;
     },
     onSuccess: () => {
@@ -52,6 +52,30 @@ export default function CardCitas() {
     },
     onError: (error) => {
       toast.error(`Error al reagendar la cita: ${error.message}`);
+    },
+  });
+
+  const { mutate: mutateConfirmarCita } = useMutation({
+    mutationKey: ["confirmar_cita", selectedCita],
+    mutationFn: async (cita: Partial<Cita>) => {
+      const response = await axios.patch(
+        `${baseUrl}/cita/${cita.id}`,
+        {
+          ...cita,
+          aceptada: true,
+        },
+        { headers: headerBearer() }
+      );
+      queryClient.invalidateQueries({queryKey:["get_all_citas"]})
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Has confirmado la cita correctamente");
+      refetch();
+      setShowPopupConfirmarCita(false);
+    },
+    onError: (error) => {
+      toast.error(`Error al confirmar la cita: ${error.message}`);
     },
   });
 
@@ -145,7 +169,7 @@ export default function CardCitas() {
               </div>
               <div className="col-span-1 flex">
                 <span className="titulos">Fecha de la cita:</span>
-                <h2 className="atributos"> &nbsp; {parseDate(cita.fecha)}</h2>
+                <p className="atributos"> &nbsp; {parseDate(cita.fecha)}</p>
               </div>
               <div className="col-span-1 motivo flex gap-2">
                 <span className="titulos">Hora:</span>
@@ -203,7 +227,7 @@ export default function CardCitas() {
           <PopupEditarCita
             selectedCita={selectedCita}
             onClose={() => setShowReagendarModal(false)}
-            mutation={mutate}
+            mutation={mutateReagendar}
             aria-label={`Reagendar cita para ${
               selectedCita.paciente
                 ? `${selectedCita.paciente.nombre} ${selectedCita.paciente.apellido}`
@@ -216,6 +240,7 @@ export default function CardCitas() {
           <PopupConfirmarAgendacion
             selectedCita={selectedCita}
             onClose={() => setShowPopupConfirmarCita(false)}
+            mutation={mutateConfirmarCita}
             aria-label={`Confirmar agendación de cita para ${
               selectedCita.paciente
                 ? `${selectedCita.paciente.nombre} ${selectedCita.paciente.apellido}`

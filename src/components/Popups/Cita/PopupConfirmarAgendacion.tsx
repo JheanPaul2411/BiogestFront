@@ -1,40 +1,23 @@
-import { baseUrl } from "@/helpers/constants/BaseURL";
-import { headerBearer } from "@/helpers/constants/Headers";
-import { handleErrors } from "@/helpers/handlers/HandleErrors";
 import { parseDate } from "@/helpers/handlers/ParseDate";
 import { Cita } from "@/helpers/models/Cita";
-import axios, { AxiosResponse } from "axios";
+import { UseMutateFunction } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 import { Modal, Button } from "flowbite-react";
-import toast from "react-hot-toast";
 
 interface Props {
   selectedCita: Cita;
+  onConfirmar?: (citaActualizada: Cita) => void; // Función para manejar el reagendamiento de la cita
+  mutation?: UseMutateFunction<AxiosResponse, unknown, Partial<Cita>, unknown>;
   onClose: () => void;
 }
 
-function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
-  async function confirmarCita() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, pacienteId, paciente, ...cita } = selectedCita;
-    try {
-      const response: AxiosResponse<Cita> = await axios.put(
-        `${baseUrl}/cita/${selectedCita.id}`,
-        {
-          ...cita,
-          aceptada: true,
-        },
-        { headers: headerBearer() }
-      );
-      if (response) {
-        toast.success("Has confirmado esta cita");
-        onClose();
-      }
-    } catch (error) {
-      handleErrors(error);
-    }
-  }
+function PopupConfirmarAgendacion({
+   onClose,
+    selectedCita,
+    mutation,
+  }: Props) {
 
-  if (new Date(selectedCita.fecha) < new Date(Date.now())) {
+  if (new Date(selectedCita.fecha) < new Date()) {
     return (
       <Modal
         popup
@@ -42,7 +25,6 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
         onClose={onClose}
         show={true}
         aria-modal={"true"}
-
         aria-label="Cita con fecha pasada"
       >
         <Modal.Header />
@@ -69,7 +51,6 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
     <Modal
       popup
       aria-modal={"true"}
-
       size={"md"}
       onClose={onClose}
       show={true}
@@ -88,7 +69,12 @@ function PopupConfirmarAgendacion({ onClose, selectedCita }: Props) {
           <Button
             className="grow"
             color="success"
-            onClick={confirmarCita}
+            onClick={() => {
+              if (mutation) {
+                mutation({id: selectedCita.id, aceptada: true});
+              }
+              onClose();
+            }}
             aria-label="Confirmar cita"
             role="button"
           >
