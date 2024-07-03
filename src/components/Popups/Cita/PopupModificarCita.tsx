@@ -29,7 +29,7 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
       popup
       show={true}
       aria-modal={"true"}
-      aria-label={`Modificar fecha de cita para ${selectedCita?.nombre} ${selectedCita?.apellido}`}
+      aria-label={`Modificar fecha de cita para ${selectedCita?.paciente?.nombre} ${selectedCita?.paciente?.apellido}`}
     >
       <Modal.Header />
       <Modal.Body className="flex flex-col items-center">
@@ -40,7 +40,7 @@ const PopupEditarCita: React.FC<PropsPopupEditarCita> = ({
           <p>
             Paciente:{" "}
             <span className="text-gray-500 dark:text-gray-400">
-            {selectedCita?.nombre} {selectedCita?.apellido}
+            {selectedCita?.paciente?.nombre} {selectedCita?.paciente?.apellido}
             </span>
           </p>
           <div className="flex gap-2 my-2">
